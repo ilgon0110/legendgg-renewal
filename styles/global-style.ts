@@ -24,9 +24,8 @@ export const GlobalStyle = createGlobalStyle`
     }
     body {
         width: 100%;
-    height: 100vh;
-    background: transparent
-    radial-gradient(closest-side at 50% 50%, #0a3b63 0%, #0a2742 100%);
+    height: fit-content;
+    background: #122A47;
     font-weight: 300;
     font-family: "NanumSquare", sans-serif;
     line-height: 1.2;

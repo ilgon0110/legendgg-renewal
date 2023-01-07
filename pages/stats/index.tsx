@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 import {
   Container,
   Item,
@@ -67,58 +68,60 @@ export default function StatOfPlayer() {
             <Season>{'Spring'}</Season>
           </Year>
           <ChartBox>
-            <ApexChart
-              type="radar"
-              width="100%"
-              height="100%"
-              series={[
-                {
-                  name: `${2013} ${'Spring'}`,
-                  data: chartData,
-                },
-              ]}
-              options={{
-                chart: {
-                  toolbar: {
-                    show: false,
-                  },
-                },
-                xaxis: {
-                  categories: ['KDA', 'KP%', 'DTH%', 'GOLD', 'WIN%'],
-                },
-                yaxis: {
-                  show: false,
-                  tickAmount: 3,
-                  min: -100,
-                  max: 100,
-                  labels: {
-                    formatter: (a: any) => a.toFixed(1),
-                  },
-                },
-                dataLabels: {
-                  enabled: true,
-                  formatter: (element: number, { dataPointIndex }) =>
-                    `${
-                      dataPointIndex === 0
-                        ? element / 10
-                        : dataPointIndex === 2
-                        ? element / 10
-                        : dataPointIndex === 3
-                        ? element * 10
-                        : element
-                    }`,
-                },
-                tooltip: {
-                  enabled: false,
-                },
-                responsive: [
+            <Suspense fallback="Loading Chart...">
+              <ApexChart
+                type="radar"
+                width="100%"
+                height="100%"
+                series={[
                   {
-                    breakpoint: 578,
-                    options: { dataLabels: { enabled: false } },
+                    name: `${2013} ${'Spring'}`,
+                    data: chartData,
                   },
-                ],
-              }}
-            ></ApexChart>
+                ]}
+                options={{
+                  chart: {
+                    toolbar: {
+                      show: false,
+                    },
+                  },
+                  xaxis: {
+                    categories: ['KDA', 'KP%', 'DTH%', 'GOLD', 'WIN%'],
+                  },
+                  yaxis: {
+                    show: false,
+                    tickAmount: 3,
+                    min: -100,
+                    max: 100,
+                    labels: {
+                      formatter: (a: any) => a.toFixed(1),
+                    },
+                  },
+                  dataLabels: {
+                    enabled: true,
+                    formatter: (element: number, { dataPointIndex }) =>
+                      `${
+                        dataPointIndex === 0
+                          ? element / 10
+                          : dataPointIndex === 2
+                          ? element / 10
+                          : dataPointIndex === 3
+                          ? element * 10
+                          : element
+                      }`,
+                  },
+                  tooltip: {
+                    enabled: false,
+                  },
+                  responsive: [
+                    {
+                      breakpoint: 578,
+                      options: { dataLabels: { enabled: false } },
+                    },
+                  ],
+                }}
+              ></ApexChart>
+            </Suspense>
           </ChartBox>
         </Profile>
       </Item>

@@ -2,35 +2,34 @@ import styled from 'styled-components';
 import { media } from '../../styles/theme';
 
 export const Container = styled.div`
-  width: 100%;
-  height: 100vh;
   display: grid;
   column-gap: 30px;
-  padding-top: 56px;
+  padding-top: 52px;
   grid-template-columns: repeat(12, 1fr);
   ${() => media.tablet} {
-    padding: 56px 24px;
+    padding: 52px 24px;
   }
   ${() => media.mobile} {
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr 5fr;
-    row-gap: 12px;
+    grid-template-rows: 1fr 8fr;
   }
 `;
+
 export const Item = styled.div`
-  position: relative;
   &:nth-child(1) {
+    background-color: #122a47;
     grid-column: 1/4;
-    border: 1px solid blue;
+    z-index: 1;
     ${() => media.mobile} {
+      position: sticky;
+      top: 56px;
       grid-column: span 4;
       padding: 0px 16px;
-      height: 30%;
+      height: 1fr;
     }
   }
   &:last-child {
     grid-column: 4/13;
-    border: 1px solid red;
     ${() => media.mobile} {
       grid-column: span 4;
       padding: 0px 16px;
@@ -38,14 +37,11 @@ export const Item = styled.div`
   }
 `;
 export const Profile = styled.div`
-  position: relative;
-  width: 100%;
-  height: 97%;
-  margin-top: 8px;
+  position: sticky;
+  top: 56px;
   background: transparent;
   border-radius: 2px;
   box-shadow: 0px 0px 6px #00000029;
-  border: 1px solid green;
 `;
 export const Img = styled.img`
   position: relative;
@@ -184,8 +180,19 @@ export const ChartBox = styled.div`
     right: 3%;
   }
 `;
+export const SeasonNavbar = styled.div`
+  background-color: #122a47;
+  position: fixed;
+  width: 100%;
+  height: 40px;
+  z-index: 1;
+  margin-top: 3px;
+
+  ${() => media.mobile} {
+    height: 30px;
+  }
+`;
 export const YearSelect = styled.select`
-  margin-top: 8px;
   color: white;
   border: none;
   background: transparent;
@@ -218,6 +225,7 @@ export const SeasonSelect = styled.span<{ opacity: number }>`
   &:hover {
     cursor: pointer;
   }
+
   ${() => media.tablet} {
     font-size: 16px;
     padding: 20px;
@@ -229,8 +237,8 @@ export const SeasonSelect = styled.span<{ opacity: number }>`
 `;
 export const StatBox = styled.div`
   position: relative;
+  margin-top: 32px;
   width: 100%;
-  height: 182px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: 182px;
@@ -290,19 +298,17 @@ export const StatBox = styled.div`
 export const CareerText = styled.h1`
   position: relative;
   color: white;
-  top: 120px;
+  margin-top: 68px;
   font-size: 20px;
   ${() => media.mobile} {
     font-size: 12px;
   }
 `;
 export const CareerBox = styled.div`
-  position: relative;
   display: grid;
   width: 100%;
-  height: 212px;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 212px;
+  grid-template-rows: 252px;
   column-gap: 30px;
   color: white;
   text-align: center;
@@ -313,7 +319,6 @@ export const CareerBox = styled.div`
   }
   div {
     position: relative;
-    top: 135px;
     border-radius: 12px;
     font-size: 20px;
     ${() => media.tablet} {

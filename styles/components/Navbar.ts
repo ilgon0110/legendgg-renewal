@@ -14,6 +14,7 @@ export const Nav = styled.nav`
   z-index: 99;
   padding: 0% 19%;
   box-sizing: border-box;
+  background-color: #122a47;
   ${() => media.tablet} {
     display: flex;
   }
@@ -179,6 +180,9 @@ export const Search = styled.form`
     width: 85%;
   }
   svg {
+    &:hover {
+      cursor: pointer;
+    }
     position: relative;
     right: 10%;
     width: 14px;

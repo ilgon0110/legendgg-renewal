@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { FieldErrors } from 'react-hook-form/dist/types';
 import {
   Nav,
   Menu,
@@ -20,8 +22,9 @@ import {
 
 export default function Navbar() {
   const router = useRouter();
+  const { register, handleSubmit, setValue } = useForm<SearchForm>();
   const routerMatch = (url: string) => {
-    return router.pathname === `/${url}` ? true : false;
+    return router.pathname.includes(`/${url}`) ? true : false;
   };
   const statsMatch = routerMatch('stats');
   const playersMatch = routerMatch('players');
@@ -68,6 +71,20 @@ export default function Navbar() {
     'viper',
     'wolf',
   ];
+  interface SearchForm {
+    search: string;
+  }
+  const onValid = (event: SearchForm) => {
+    const { search: keyword } = event;
+    console.log(keyword);
+    if (!playersName.includes(keyword)) {
+      alert(`플레이어 이름을 제대로 입력해주세요.\n입력값:${keyword}`);
+      setValue('search', '');
+      return;
+    }
+    router.push({ pathname: '/stats/[id]', query: { id: keyword } });
+    setValue('search', '');
+  };
 
   return (
     <>
@@ -133,7 +150,7 @@ export default function Navbar() {
           </MenuLogo>
           <Items>
             <Item>
-              <Link href={'/stats'} legacyBehavior>
+              <Link href={'/stats/faker'} legacyBehavior>
                 <Alink>
                   상세지표{statsMatch && <UnderLine layoutId="underline" />}
                 </Alink>
@@ -156,14 +173,19 @@ export default function Navbar() {
               </Link>
             </Item>
           </Items>
-          <Search>
-            <Input list="players" placeholder="select players" />
+          <Search onSubmit={handleSubmit(onValid)}>
+            <Input
+              list="players"
+              placeholder="select players"
+              {...register('search')}
+            />
             <DataList id="players">
               {playersName?.map((name) => (
                 <option value={name} key={name}></option>
               ))}
             </DataList>
             <svg
+              onClick={handleSubmit(onValid)}
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"

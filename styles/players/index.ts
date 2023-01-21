@@ -8,14 +8,15 @@ export const Container = styled.div`
   display: grid;
   gap: 30px;
   margin: 0 auto;
-  padding-top: 56px;
   grid-template-columns: repeat(12, 1fr);
   ${() => media.tablet} {
     grid-template-columns: repeat(8, 1fr);
     gap: 0;
   }
   ${() => media.mobile} {
+    overflow: visible;
     grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 280px 400px;
     height: 100%;
     padding-top: 64px;
   }
@@ -35,10 +36,12 @@ export const Item = styled.div`
   &:nth-child(2) {
     border: 1px solid red;
     grid-column: 4/10;
+    padding-top: 56px;
     ${() => media.tablet} {
       grid-column: span 4;
     }
     ${() => media.mobile} {
+      position: relative;
       height: 400px;
       order: 3;
     }
@@ -63,11 +66,15 @@ export const InputPlayer = styled.div`
   transform: translate(-50%, -50%);
   text-align: center;
   align-items: center;
+  border: 1px solid blue;
   ${() => media.mobile} {
-    height: 195px;
+    top: 0%;
+    left: 0%;
+    transform: translate(0%, 0%);
   }
 `;
 export const Search = styled.form``;
+
 export const Input = styled.input`
   position: relative;
   width: 80%;
@@ -86,7 +93,8 @@ export const Input = styled.input`
     margin-bottom: 16px;
   }
 `;
-export const Error = styled.h1`
+export const Error = styled.span`
+  display: block;
   position: relative;
   color: #fadc44;
   top: 130px;
@@ -131,7 +139,10 @@ export const Chart = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: black;
+  border: 1px solid violet;
+  ${() => media.mobile} {
+    height: 100%;
+  }
 `;
 export const Button = styled.button`
   position: relative;

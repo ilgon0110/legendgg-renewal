@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from '../styles/theme';
 
 const Wrapper = styled.div`
   position: relative;
@@ -6,9 +7,16 @@ const Wrapper = styled.div`
   height: 100%;
   background: url('${process.env.PUBLIC_URL}/imgs/cat.png');
   background-repeat: no-repeat;
-  background-position: center;
-  background-size: 25%;
+  background-position: 50% 70%;
+  background-size: 15%;
   border: 1px solid red;
+  ${() => media.tablet} {
+    background-position: center;
+  }
+  ${() => media.mobile} {
+    height: 400px;
+    background-position: center;
+  }
 `;
 const Loading = styled.h1`
   margin-top: 15%;
@@ -17,12 +25,18 @@ const Loading = styled.h1`
   font-size: 24px;
   font-weight: normal;
   text-align: center;
+  ${() => media.tablet} {
+    font-size: 16px;
+  }
 `;
 const Text = styled.h2`
   color: white;
   font-size: 20px;
   font-weight: normal;
   text-align: center;
+  ${() => media.tablet} {
+    font-size: 14px;
+  }
 `;
 function NoData({ year, season }: { year: string; season: string }) {
   return (

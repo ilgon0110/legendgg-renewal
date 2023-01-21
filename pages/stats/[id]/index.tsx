@@ -34,8 +34,8 @@ import {
   CareerBox,
 } from '../../../styles/stats';
 import NoData from '../../../components/NoData';
-
-interface playerData {
+import { setRank } from '../../../utilities';
+export interface IplayerData {
   id?: number;
   team?: string;
   kda?: number;
@@ -63,9 +63,9 @@ interface playerData {
 }
 
 interface SeasonData {
-  spring: playerData;
-  summer: playerData;
-  world: playerData;
+  spring: IplayerData;
+  summer: IplayerData;
+  world: IplayerData;
 }
 
 interface Data {
@@ -97,7 +97,7 @@ const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({
     summer: 0.5,
     world: 0.5,
   });
-  const SELECT_STAT: playerData = playerData[selectedYear][selectedSeason];
+  const SELECT_STAT: IplayerData = playerData[selectedYear][selectedSeason];
   const chartDataHandler = (num: number | undefined) => {
     if (num === undefined) return 0;
     return num;
@@ -137,12 +137,7 @@ const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({
           : chartDataHandler(SELECT_STAT.dmg),
     },
   ];
-  const setRank = (rank: number | undefined) => {
-    if (rank === 1) return '1st';
-    if (rank === 2) return '2nd';
-    if (rank === 3) return '3rd';
-    return rank ? `${rank}th` : null;
-  };
+
   const yearLists = Object.keys(playerData).filter((e) => e !== 'quote');
   const handleYear = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedYear(event.target.value);
@@ -152,18 +147,13 @@ const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({
     const eventTarget = event.target as HTMLElement;
     const targetSeason = eventTarget.innerHTML.toLowerCase();
     setSelectedSeason(targetSeason);
-    if (targetSeason === 'spring') {
-      let rest = { spring: 1, summer: 0.5, world: 0.5 };
-      setSeasonOpacity(rest);
-    }
-    if (targetSeason === 'summer') {
-      let rest = { spring: 0.5, summer: 1, world: 0.5 };
-      setSeasonOpacity(rest);
-    }
-    if (targetSeason === 'world') {
-      let rest = { spring: 0.5, summer: 0.5, world: 1 };
-      setSeasonOpacity(rest);
-    }
+    changeSeasonOpacity(targetSeason);
+  };
+
+  const changeSeasonOpacity = (season: string) => {
+    let opacity = { spring: 0.5, summer: 0.5, world: 0.5 };
+    opacity[season as keyof typeof opacity] = 1;
+    setSeasonOpacity(opacity);
   };
 
   return (
@@ -338,9 +328,8 @@ const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({
                 <h1>플레이오프</h1>
               </div>
               <div>
-                <h1>{SELECT_STAT.pogpoint}</h1>
                 <h1>
-                  {SELECT_STAT.pogpointRank == 99
+                  {SELECT_STAT.pogpoint == 99
                     ? 'World MVP'
                     : setRank(SELECT_STAT.pogpointRank)}
                 </h1>

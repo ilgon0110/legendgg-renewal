@@ -11,12 +11,12 @@ export const Container = styled.div`
   }
   ${() => media.mobile} {
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr 8fr;
   }
 `;
 
 export const Item = styled.div`
   &:nth-child(1) {
+    border: 1px solid red;
     background-color: #122a47;
     grid-column: 1/4;
     z-index: 1;
@@ -25,10 +25,11 @@ export const Item = styled.div`
       top: 56px;
       grid-column: span 4;
       padding: 0px 16px;
-      height: 1fr;
+      height: 150px;
     }
   }
   &:last-child {
+    border: 1px solid blue;
     grid-column: 4/13;
     ${() => media.mobile} {
       grid-column: span 4;
@@ -42,6 +43,9 @@ export const Profile = styled.div`
   background: transparent;
   border-radius: 2px;
   box-shadow: 0px 0px 6px #00000029;
+  ${() => media.mobile} {
+    height: 70%;
+  }
 `;
 export const Img = styled.img`
   position: relative;

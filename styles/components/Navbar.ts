@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
-import { media } from '../theme';
+import { media } from '@styles/theme';
 
 export const Nav = styled.nav`
   display: flex;
@@ -28,7 +28,7 @@ export const Outer = styled.div`
 `;
 export const Menu = styled.div<{ isClicked: boolean }>`
   ${() => media.tablet} {
-    display ${(props) => (props.isClicked ? 'block' : 'none')};
+    display: ${(props) => (props.isClicked ? 'block' : 'none')};
     width: 48px;
     height: 52px;
     background: url('${process.env.PUBLIC_URL}/imgs/menu.png');

@@ -1,8 +1,6 @@
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { IRootState } from '../store';
-import useSWR from 'swr';
+import { useSelector } from 'react-redux';
+import { IRootState } from '@store/index';
 
 const ApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,

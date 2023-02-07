@@ -1,12 +1,5 @@
 import { GetServerSideProps, NextPage } from 'next';
-import {
-  ChangeEvent,
-  MouseEventHandler,
-  MouseEvent,
-  useEffect,
-  useState,
-  useRef,
-} from 'react';
+import { ChangeEvent, MouseEvent, useState } from 'react';
 import path from 'path';
 import { promises as fs } from 'fs';
 import dynamic from 'next/dynamic';
@@ -32,9 +25,10 @@ import {
   PlayerSaying,
   CareerText,
   CareerBox,
-} from '../../../styles/stats';
-import NoData from '../../../components/NoData';
-import { setRank } from '../../../utilities';
+} from '@styles/stats';
+import NoData from '@components/NoData';
+import { setRank } from '@utilities/index';
+
 export interface IplayerData {
   id?: number;
   team?: string;

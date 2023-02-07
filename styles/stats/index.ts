@@ -220,6 +220,7 @@ export const YearSelect = styled.select`
     margin-left: 16px;
   }
 `;
+
 export const SeasonSelect = styled.span<{ opacity: number }>`
   font-size: 20px;
   color: white;
@@ -239,6 +240,7 @@ export const SeasonSelect = styled.span<{ opacity: number }>`
     padding: 14px;
   }
 `;
+
 export const StatBox = styled.div`
   position: relative;
   margin-top: 32px;

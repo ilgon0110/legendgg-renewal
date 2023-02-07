@@ -1,4 +1,3 @@
-import styled, { css } from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
@@ -6,47 +5,15 @@ import 'swiper/css/pagination';
 import { Keyboard, EffectCoverflow, Pagination } from 'swiper';
 import Head from 'next/head';
 import Image from 'next/image';
-import { Container, Text, Wrapper, Box } from '../styles';
+import { Container, Text, Wrapper, Box } from '@styles/index';
+import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import { IRootState } from '@store/index';
 
 export default function Home() {
-  const playersName = [
-    'ambition',
-    'bang',
-    'bdd',
-    'bengi',
-    'beryL',
-    'canyon',
-    'chovy',
-    'crown',
-    'cuvee',
-    'deft',
-    'faker',
-    'flame',
-    'fly',
-    'gorilla',
-    'imp',
-    'kakao',
-    'khan',
-    'kuro',
-    'madlife',
-    'marin',
-    'mata',
-    'nuguri',
-    'pawn',
-    'peanut',
-    'pray',
-    'rascal',
-    'ruler',
-    'score',
-    'showmaker',
-    'shy',
-    'smeb',
-    'ssumday',
-    'tarzan',
-    'teddy',
-    'viper',
-    'wolf',
-  ];
+  const { names: playersName } = useSelector(
+    (state: IRootState) => state.playersSlice,
+  );
   return (
     <>
       <Head>
@@ -85,18 +52,20 @@ export default function Home() {
               },
             }}
           >
-            {playersName.map((a) => (
-              <SwiperSlide key={a}>
-                <Box>
-                  <Image
-                    src={`/imgs/profiles/${a}.png`}
-                    alt={a}
-                    fill
-                    sizes="100%"
-                    quality={100}
-                    priority
-                  />
-                </Box>
+            {playersName.map((name) => (
+              <SwiperSlide key={name}>
+                <Link rel={'preload'} href={`/stats/${name}`}>
+                  <Box>
+                    <Image
+                      src={`/imgs/profiles/${name}.png`}
+                      alt={name}
+                      fill
+                      sizes="100%"
+                      quality={100}
+                      priority
+                    />
+                  </Box>
+                </Link>
               </SwiperSlide>
             ))}
           </Swiper>

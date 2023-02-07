@@ -1,10 +1,5 @@
 import Image from 'next/image';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { playersActions } from '../store';
-import useSWR from 'swr';
-import { IRootState } from '../store';
-import { useEffect, useState } from 'react';
 import { IplayerData } from '../pages/stats/[id]';
 import { setRank } from '../utilities';
 import { media } from '../styles/theme';

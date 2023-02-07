@@ -20,7 +20,7 @@ import {
   PlayerSaying,
   CareerText,
   CareerBox,
-} from '../../styles/stats';
+} from '@styles/stats';
 
 export default function StatOfPlayer() {
   const chartData = [

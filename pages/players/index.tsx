@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import NoCompared from '../../components/NoCompared';
-import PlayerChart from '../../components/PlayerChart';
-import PlayerCard1Container from '../../controllers/PlayerCard1Container';
-import PlayerCard2Container from '../../controllers/PlayerCard2Container';
-import { IRootState, playersActions } from '../../store';
+import NoCompared from '@components/NoCompared';
+import PlayerChart from '@components/PlayerChart';
+import PlayerCard1Container from '@controllers/PlayerCard1Container';
+import PlayerCard2Container from '@controllers/PlayerCard2Container';
+import { IRootState, playersActions } from '@store/index';
 import {
   Container,
   Item,
@@ -18,7 +18,7 @@ import {
   ChartText,
   ChartText2,
   Chart,
-} from '../../styles/players';
+} from '@styles/players';
 
 interface PlayerData {
   players: string;

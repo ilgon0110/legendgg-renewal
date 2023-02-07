@@ -1,13 +1,10 @@
-import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { chartActions, playersActions } from '../store';
+import { chartActions, playersActions, IRootState } from '@store/index';
 import useSWR from 'swr';
-import { IRootState } from '../store';
 import { useEffect, useState } from 'react';
-import { IplayerData } from '../pages/stats/[id]';
-import { setRank } from '../utilities';
-import PlayerCard from '../components/PlayerCard';
+import { IplayerData } from '@pages/stats/[id]';
+import PlayerCard from '@components/PlayerCard';
 
 const Button = styled.button`
   display: block;

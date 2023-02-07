@@ -1,7 +1,4 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
-import { stat } from 'fs';
-import { combineReducers } from 'redux';
-import { IplayerData } from '../pages/stats/[id]';
 
 interface IplayerSlice {
   years: string[];
@@ -21,7 +18,15 @@ interface IChart {
   dmg: number;
 }
 
+export interface IPostModalPlayerInitialState {
+  isSelected: boolean;
+  name: string;
+  year: string;
+  season: string;
+}
+
 export interface IRootState {
+  navBarSlice: { isSelect: boolean };
   playersSlice: IplayerSlice;
   players: {
     isPlayerOneSelect: boolean;
@@ -37,22 +42,33 @@ export interface IRootState {
     playerOne: IChart;
     playerTwo: IChart;
   };
+  postModal: {
+    [key: string]: any;
+    isOpen: boolean;
+    top: IPostModalPlayerInitialState;
+    jungle: IPostModalPlayerInitialState;
+    mid: IPostModalPlayerInitialState;
+    bot: IPostModalPlayerInitialState;
+    support: IPostModalPlayerInitialState;
+  };
 }
+
+const navBarSlice = createSlice({
+  name: 'navBar',
+  initialState: {
+    isSelect: true,
+  },
+  reducers: {
+    isClick: (state) => {
+      return { ...state, isSelect: Boolean(!state.isSelect) };
+    },
+  },
+});
 
 const playersSlice = createSlice({
   name: 'playerSlice',
   initialState: {
-    years: [
-      '2013',
-      '2014',
-      '2015',
-      '2016',
-      '2017',
-      '2018',
-      '2019',
-      '2020',
-      '2021',
-    ],
+    years: ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021'],
     seasons: ['spring', 'summer', 'world'],
     names: [
       'ambition',
@@ -167,13 +183,47 @@ const players = createSlice({
     },
   },
 });
-export const store = configureStore({
-  reducer: {
-    playersSlice: playersSlice.reducer,
-    players: players.reducer,
-    chart: chart.reducer,
+const postModalPlayerInitialState = {
+  isSelected: false,
+  name: '',
+  year: '',
+  season: '',
+};
+const postModal = createSlice({
+  name: 'postModal',
+  initialState: {
+    isOpen: false,
+    top: postModalPlayerInitialState,
+    jungle: postModalPlayerInitialState,
+    mid: postModalPlayerInitialState,
+    bot: postModalPlayerInitialState,
+    support: postModalPlayerInitialState,
+  },
+  reducers: {
+    setIsOpen: (state, action) => {
+      const { payload } = action;
+      return { ...state, isOpen: payload };
+    },
+    playerSelect: (state, action) => {
+      const {
+        payload: { line, playerInfo, isSelected },
+      } = action;
+      return { ...state, [line.toLowerCase()]: { ...playerInfo, isSelected: isSelected } };
+    },
   },
 });
 
+export const store = configureStore({
+  reducer: {
+    navBarSlice: navBarSlice.reducer,
+    playersSlice: playersSlice.reducer,
+    players: players.reducer,
+    chart: chart.reducer,
+    postModal: postModal.reducer,
+  },
+});
+
+export const navBarActions = navBarSlice.actions;
 export const playersActions = players.actions;
 export const chartActions = chart.actions;
+export const postModalActions = postModal.actions;

@@ -1,8 +1,10 @@
+import { IRootState, navBarActions } from '@store/index';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FieldErrors } from 'react-hook-form/dist/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { signIn, useSession, signOut } from 'next-auth/react';
 import {
   Nav,
   Menu,
@@ -21,7 +23,14 @@ import {
 } from '../styles/components/Navbar';
 
 export default function Navbar() {
+  const { data: session } = useSession();
+  console.log(session);
   const router = useRouter();
+  const {
+    playersSlice: { names: playersName },
+    navBarSlice: { isSelect },
+  } = useSelector((state: IRootState) => state);
+  const dispatch = useDispatch();
   const { register, handleSubmit, setValue } = useForm<SearchForm>();
   const routerMatch = (url: string) => {
     return router.pathname.includes(`/${url}`) ? true : false;
@@ -29,48 +38,9 @@ export default function Navbar() {
   const statsMatch = routerMatch('stats');
   const playersMatch = routerMatch('players');
   const myteamsMatch = routerMatch('myteams');
-  const [menuState, setMenuState] = useState(false);
   const onMenuClick = () => {
-    setMenuState((prev) => !prev);
+    dispatch(navBarActions.isClick());
   };
-  const playersName = [
-    'ambition',
-    'bang',
-    'bdd',
-    'bengi',
-    'beryL',
-    'canyon',
-    'chovy',
-    'crown',
-    'cuvee',
-    'deft',
-    'faker',
-    'flame',
-    'fly',
-    'gorilla',
-    'imp',
-    'kakao',
-    'khan',
-    'kuro',
-    'madlife',
-    'marin',
-    'mata',
-    'nuguri',
-    'pawn',
-    'peanut',
-    'pray',
-    'rascal',
-    'ruler',
-    'score',
-    'showmaker',
-    'shy',
-    'smeb',
-    'ssumday',
-    'tarzan',
-    'teddy',
-    'viper',
-    'wolf',
-  ];
   interface SearchForm {
     search: string;
   }
@@ -84,35 +54,23 @@ export default function Navbar() {
     }
     router.push({ pathname: '/stats/[id]', query: { id: keyword } });
     setValue('search', '');
+    dispatch(navBarActions.isClick());
   };
 
   return (
     <>
       <Nav>
-        <Menu onClick={onMenuClick} isClicked={menuState}></Menu>
+        <Menu onClick={onMenuClick} isClicked={isSelect}></Menu>
         <Outer>
           <Link href={'/'}>
-            <Logo isClicked={menuState}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                id="logo-40"
-                viewBox="0 0 58 32"
-                fill="none"
-              >
+            <Logo isClicked={isSelect}>
+              <svg xmlns="http://www.w3.org/2000/svg" id="logo-40" viewBox="0 0 58 32" fill="none">
                 <path
                   d="M0 16C0 7.16344 7.16344 0 16 0H37C45.8366 0 53 7.16344 53 16V32H16C7.16344 32 0 24.8366 0 16Z"
                   fill="#ffffff"
                   stopColor="#ffffff"
                 />
-                <rect
-                  x="6"
-                  y="6"
-                  width="41"
-                  height="20"
-                  rx="10"
-                  fill="#bbbbbb"
-                  stopColor="#bbbbbb"
-                />
+                <rect x="6" y="6" width="41" height="20" rx="10" fill="#bbbbbb" stopColor="#bbbbbb" />
                 <circle cx="16" cy="16" r="5" fill="#000000" />
                 <circle cx="14" cy="14" r="1" fill="#ffffff" />
                 <circle cx="38" cy="16" r="5" fill="#000000" />
@@ -121,28 +79,15 @@ export default function Navbar() {
             </Logo>
           </Link>
         </Outer>
-        <MenuBar isClicked={menuState}>
-          <Exit onClick={onMenuClick} isClicked={menuState}></Exit>
-          <MenuLogo
-            xmlns="http://www.w3.org/2000/svg"
-            id="logo-40"
-            viewBox="0 0 58 32"
-            fill="none"
-          >
+        <MenuBar isClicked={isSelect}>
+          <Exit onClick={onMenuClick} isClicked={isSelect}></Exit>
+          <MenuLogo xmlns="http://www.w3.org/2000/svg" id="logo-40" viewBox="0 0 58 32" fill="none">
             <path
               d="M0 16C0 7.16344 7.16344 0 16 0H37C45.8366 0 53 7.16344 53 16V32H16C7.16344 32 0 24.8366 0 16Z"
               fill="#ffffff"
               stopColor="#ffffff"
             />
-            <rect
-              x="6"
-              y="6"
-              width="41"
-              height="20"
-              rx="10"
-              fill="#bbbbbb"
-              stopColor="#bbbbbb"
-            />
+            <rect x="6" y="6" width="41" height="20" rx="10" fill="#bbbbbb" stopColor="#bbbbbb" />
             <circle cx="16" cy="16" r="5" fill="#000000" />
             <circle cx="14" cy="14" r="1" fill="#ffffff" />
             <circle cx="38" cy="16" r="5" fill="#000000" />
@@ -151,14 +96,14 @@ export default function Navbar() {
           <Items>
             <Item>
               <Link href={'/stats/faker'} legacyBehavior>
-                <Alink>
+                <Alink onClick={() => dispatch(navBarActions.isClick())}>
                   상세지표{statsMatch && <UnderLine layoutId="underline" />}
                 </Alink>
               </Link>
             </Item>
             <Item>
               <Link href={'/players'} legacyBehavior>
-                <Alink>
+                <Alink onClick={() => dispatch(navBarActions.isClick())}>
                   스탯비교
                   {playersMatch && <UnderLine layoutId="underline" />}
                 </Alink>
@@ -166,7 +111,7 @@ export default function Navbar() {
             </Item>
             <Item>
               <Link href={'/myteams'} legacyBehavior>
-                <Alink>
+                <Alink onClick={() => dispatch(navBarActions.isClick())}>
                   나만의팀
                   {myteamsMatch && <UnderLine layoutId="underline" />}
                 </Alink>
@@ -174,11 +119,7 @@ export default function Navbar() {
             </Item>
           </Items>
           <Search onSubmit={handleSubmit(onValid)}>
-            <Input
-              list="players"
-              placeholder="select players"
-              {...register('search')}
-            />
+            <Input list="players" placeholder="select players" {...register('search')} />
             <DataList id="players">
               {playersName?.map((name) => (
                 <option value={name} key={name}></option>
@@ -197,6 +138,29 @@ export default function Navbar() {
               ></path>
             </svg>
           </Search>
+          <Item>
+            <Link href={'#'} legacyBehavior>
+              {session ? (
+                <Alink
+                  onClick={() => {
+                    dispatch(navBarActions.isClick());
+                    signOut();
+                  }}
+                >
+                  로그아웃
+                </Alink>
+              ) : (
+                <Alink
+                  onClick={() => {
+                    dispatch(navBarActions.isClick());
+                    signIn();
+                  }}
+                >
+                  로그인
+                </Alink>
+              )}
+            </Link>
+          </Item>
         </MenuBar>
       </Nav>
     </>

@@ -8,7 +8,6 @@ S.Container = styled.div`
   position: fixed;
   width: 100%;
   height: 550px;
-  border: 2px solid red;
   background: black;
 `;
 

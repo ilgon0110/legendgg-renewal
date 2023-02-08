@@ -19,15 +19,11 @@ S.Item = styled.div`
   margin-right: 15%;
   &:nth-child(1) {
     display: flex;
-
-    border: 1px solid red;
   }
   &:nth-child(2) {
-    border: 1px solid red;
     font-size: 16px;
   }
   &:nth-child(3) {
-    border: 1px solid red;
   }
 `;
 
@@ -35,7 +31,6 @@ S.ImageBox = styled.div`
   width: 227px;
   height: 300px;
   margin: 12px;
-  border: 1px solid blue;
   display: flex;
   flex-direction: column;
   justify-content: center;

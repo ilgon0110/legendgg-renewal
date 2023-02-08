@@ -8,7 +8,6 @@ S.Wrapper = styled.div`
   position: relative;
   width: 100%;
   height: fit-content;
-  border: 1px solid green;
 `;
 S.Profile = styled.div`
   position: relative;

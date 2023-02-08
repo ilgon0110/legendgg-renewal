@@ -14,7 +14,6 @@ S.Container = styled.div`
   padding-right: 60px;
   column-gap: 30px;
   margin: 0 auto;
-  border: 1px solid red;
   box-sizing: border-box;
 `;
 
@@ -23,7 +22,6 @@ S.Item = styled.div`
   margin-top: 48px;
   grid-column: span 4;
   height: 288px;
-  border: 1px solid green;
   background: white;
 `;
 

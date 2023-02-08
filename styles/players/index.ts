@@ -27,7 +27,6 @@ S.Container = styled.div`
 S.Item = styled.div`
   position: relative;
   &:nth-child(1) {
-    border: 1px solid red;
     grid-column: 1/4;
     ${() => media.tablet} {
       grid-column: span 2;
@@ -37,7 +36,6 @@ S.Item = styled.div`
     }
   }
   &:nth-child(2) {
-    border: 1px solid red;
     grid-column: 4/10;
     padding-top: 56px;
     ${() => media.tablet} {
@@ -50,7 +48,6 @@ S.Item = styled.div`
     }
   }
   &:nth-child(3) {
-    border: 1px solid red;
     grid-column: 10/13;
     ${() => media.tablet} {
       grid-column: span 2;
@@ -69,7 +66,6 @@ S.InputPlayer = styled.div`
   transform: translate(-50%, -50%);
   text-align: center;
   align-items: center;
-  border: 1px solid blue;
   ${() => media.mobile} {
     top: 0%;
     left: 0%;
@@ -142,7 +138,6 @@ S.Chart = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid violet;
   ${() => media.mobile} {
     height: 100%;
   }

@@ -15,4 +15,11 @@ const options = {
       clientSecret: process.env.KAKAO_CLIENT_SECRET!,
     }),
   ],
+  callbacks: {
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token and user id from a provider.
+      session.id = user.id;
+      return session;
+    },
+  },
 };

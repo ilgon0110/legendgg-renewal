@@ -22,7 +22,6 @@ S.Container = styled.div`
 
 S.Item = styled.div`
   &:nth-child(1) {
-    border: 1px solid red;
     background-color: #122a47;
     grid-column: 1/4;
     z-index: 1;
@@ -35,7 +34,6 @@ S.Item = styled.div`
     }
   }
   &:last-child {
-    border: 1px solid blue;
     grid-column: 4/13;
     ${() => media.mobile} {
       grid-column: span 4;

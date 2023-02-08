@@ -4,28 +4,7 @@ import path from 'path';
 import { promises as fs } from 'fs';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
-import {
-  Container,
-  Item,
-  Profile,
-  Img,
-  Logo,
-  LogoName,
-  WinBar,
-  WinRateBar,
-  WinRate,
-  WinRateRank,
-  Year,
-  Season,
-  ChartBox,
-  SeasonNavbar,
-  YearSelect,
-  SeasonSelect,
-  StatBox,
-  PlayerSaying,
-  CareerText,
-  CareerBox,
-} from '@styles/stats';
+import { S } from '@styles/stats';
 import NoData from '@components/NoData';
 import { setRank } from '@utilities/index';
 
@@ -79,10 +58,7 @@ const ApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 });
 
-const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({
-  data,
-  playerName,
-}) => {
+const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({ data, playerName }) => {
   const playerData: Data = JSON.parse(data);
   const [selectedYear, setSelectedYear] = useState('2013');
   const [selectedSeason, setSelectedSeason] = useState('spring');
@@ -104,31 +80,19 @@ const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({
     },
     {
       x: 'KP',
-      y:
-        Number(selectedYear) < 2015
-          ? chartDataHandler(SELECT_STAT.kp)
-          : chartDataHandler(SELECT_STAT.gd10),
+      y: Number(selectedYear) < 2015 ? chartDataHandler(SELECT_STAT.kp) : chartDataHandler(SELECT_STAT.gd10),
     },
     {
       x: 'DTH',
-      y:
-        Number(selectedYear) < 2015
-          ? chartDataHandler(SELECT_STAT.dth)
-          : chartDataHandler(SELECT_STAT.cs10) * 10,
+      y: Number(selectedYear) < 2015 ? chartDataHandler(SELECT_STAT.dth) : chartDataHandler(SELECT_STAT.cs10) * 10,
     },
     {
       x: 'GOLD',
-      y:
-        Number(selectedYear) < 2015
-          ? chartDataHandler(SELECT_STAT.gold)
-          : chartDataHandler(SELECT_STAT.dpm) / 10,
+      y: Number(selectedYear) < 2015 ? chartDataHandler(SELECT_STAT.gold) : chartDataHandler(SELECT_STAT.dpm) / 10,
     },
     {
       x: 'WIN',
-      y:
-        Number(selectedYear) < 2015
-          ? chartDataHandler(SELECT_STAT.winRate)
-          : chartDataHandler(SELECT_STAT.dmg),
+      y: Number(selectedYear) < 2015 ? chartDataHandler(SELECT_STAT.winRate) : chartDataHandler(SELECT_STAT.dmg),
     },
   ];
 
@@ -151,27 +115,24 @@ const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({
   };
 
   return (
-    <Container>
-      <Item>
-        <Profile>
-          <Img src={`/imgs/profiles/${playerName}.png`} alt={'profile'}></Img>
-          <Logo
-            src={`/imgs/team_logos/${SELECT_STAT.team}.png`}
-            alt={'Logo'}
-          ></Logo>
-          <LogoName>{SELECT_STAT.team}</LogoName>
-          <WinBar>
-            <WinRateBar winrate={SELECT_STAT.winRate}></WinRateBar>
-          </WinBar>
-          <WinRate>
+    <S.Container>
+      <S.Item>
+        <S.Profile>
+          <S.Img src={`/imgs/profiles/${playerName}.png`} alt={'profile'}></S.Img>
+          <S.Logo src={`/imgs/team_logos/${SELECT_STAT.team}.png`} alt={'Logo'}></S.Logo>
+          <S.LogoName>{SELECT_STAT.team}</S.LogoName>
+          <S.WinBar>
+            <S.WinRateBar winrate={SELECT_STAT.winRate}></S.WinRateBar>
+          </S.WinBar>
+          <S.WinRate>
             {SELECT_STAT.winRate}
-            <WinRateRank>{setRank(SELECT_STAT.winRateRank)}</WinRateRank>
-          </WinRate>
-          <Year>
+            <S.WinRateRank>{setRank(SELECT_STAT.winRateRank)}</S.WinRateRank>
+          </S.WinRate>
+          <S.Year>
             {selectedYear}
-            <Season>{selectedSeason}</Season>
-          </Year>
-          <ChartBox>
+            <S.Season>{selectedSeason}</S.Season>
+          </S.Year>
+          <S.ChartBox>
             <Suspense fallback="Loading Chart...">
               <ApexChart
                 type="radar"
@@ -229,32 +190,32 @@ const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({
                 }}
               ></ApexChart>
             </Suspense>
-          </ChartBox>
-        </Profile>
-      </Item>
-      <Item>
-        <SeasonNavbar>
-          <YearSelect id="year" onChange={handleYear}>
+          </S.ChartBox>
+        </S.Profile>
+      </S.Item>
+      <S.Item>
+        <S.SeasonNavbar>
+          <S.YearSelect id="year" onChange={handleYear}>
             {yearLists.map((option) => (
               <option value={option} key={option}>
                 {option}
               </option>
             ))}
-          </YearSelect>
-          <SeasonSelect opacity={seasonOpacity.spring} onClick={handleSeason}>
+          </S.YearSelect>
+          <S.SeasonSelect opacity={seasonOpacity.spring} onClick={handleSeason}>
             Spring
-          </SeasonSelect>
-          <SeasonSelect opacity={seasonOpacity.summer} onClick={handleSeason}>
+          </S.SeasonSelect>
+          <S.SeasonSelect opacity={seasonOpacity.summer} onClick={handleSeason}>
             Summer
-          </SeasonSelect>
-          <SeasonSelect opacity={seasonOpacity.world} onClick={handleSeason}>
+          </S.SeasonSelect>
+          <S.SeasonSelect opacity={seasonOpacity.world} onClick={handleSeason}>
             World
-          </SeasonSelect>
-        </SeasonNavbar>
+          </S.SeasonSelect>
+        </S.SeasonNavbar>
         {SELECT_STAT.winRate ? (
           <>
             {Number(selectedYear) < 2015 ? (
-              <StatBox>
+              <S.StatBox>
                 <div>
                   <h1>{SELECT_STAT.kda}</h1>
                   <h1>{setRank(SELECT_STAT.kdaRank)}</h1>
@@ -280,9 +241,9 @@ const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({
                   {<h1>{setRank(SELECT_STAT.winRateRank)}</h1>}
                   <h1>{'WINRATE%'}</h1>
                 </div>
-              </StatBox>
+              </S.StatBox>
             ) : (
-              <StatBox>
+              <S.StatBox>
                 <div>
                   <h1>{SELECT_STAT.kda}</h1>
                   <h1>{setRank(SELECT_STAT.kdaRank)}</h1>
@@ -308,11 +269,11 @@ const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({
                   {<h1>{setRank(SELECT_STAT.dmgRank)}</h1>}
                   <h1>{'DMG%'}</h1>
                 </div>
-              </StatBox>
+              </S.StatBox>
             )}
-            <PlayerSaying>{playerData.quote}</PlayerSaying>
-            <CareerText>커리어</CareerText>
-            <CareerBox>
+            <S.PlayerSaying>{playerData.quote}</S.PlayerSaying>
+            <S.CareerText>커리어</S.CareerText>
+            <S.CareerBox>
               <div>
                 <h1>{setRank(SELECT_STAT.groupRank)}</h1>
                 <h1>정규시즌</h1>
@@ -322,14 +283,10 @@ const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({
                 <h1>플레이오프</h1>
               </div>
               <div>
-                <h1>
-                  {SELECT_STAT.pogpoint == 99
-                    ? 'World MVP'
-                    : setRank(SELECT_STAT.pogpointRank)}
-                </h1>
+                <h1>{SELECT_STAT.pogpoint == 99 ? 'World MVP' : setRank(SELECT_STAT.pogpointRank)}</h1>
                 <h1>POG포인트</h1>
               </div>
-            </CareerBox>
+            </S.CareerBox>
             <div
               style={{
                 width: '200px',
@@ -341,18 +298,15 @@ const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({
         ) : (
           <NoData year={selectedYear} season={selectedSeason}></NoData>
         )}
-      </Item>
-    </Container>
+      </S.Item>
+    </S.Container>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const playerName = params?.id;
   const jsonDirectory = path.join(process.cwd(), '/public/jsons');
-  const fileContents = await fs.readFile(
-    jsonDirectory + `/${playerName}.json`,
-    'utf8',
-  );
+  const fileContents = await fs.readFile(jsonDirectory + `/${playerName}.json`, 'utf8');
   return {
     props: {
       data: JSON.parse(JSON.stringify(fileContents)),

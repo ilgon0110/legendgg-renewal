@@ -1,8 +1,11 @@
 import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
 import { media } from '@styles/theme';
+import { IStyle } from '@styles/stats';
 
-export const Nav = styled.nav`
+export const S: IStyle = {};
+
+S.Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,14 +22,14 @@ export const Nav = styled.nav`
     display: flex;
   }
 `;
-export const Outer = styled.div`
+S.Outer = styled.div`
   width: fit-content;
   ${() => media.tablet} {
     width: 100%;
     height: 56px;
   }
 `;
-export const Menu = styled.div<{ isClicked: boolean }>`
+S.Menu = styled.div<{ isClicked: boolean }>`
   ${() => media.tablet} {
     display: ${(props) => (props.isClicked ? 'block' : 'none')};
     width: 48px;
@@ -42,7 +45,7 @@ export const Menu = styled.div<{ isClicked: boolean }>`
   }
 `;
 
-export const Logo = styled.div<{ isClicked: boolean }>`
+S.Logo = styled.div<{ isClicked: boolean }>`
   position: relative;
   width: fit-content;
   height: 54px;
@@ -58,7 +61,7 @@ export const Logo = styled.div<{ isClicked: boolean }>`
   }
 `;
 
-export const MenuBar = styled.div<{ isClicked: boolean }>`
+S.MenuBar = styled.div<{ isClicked: boolean }>`
   display: flex;
   ${() => media.tablet} {
     position: fixed;
@@ -91,7 +94,7 @@ export const MenuBar = styled.div<{ isClicked: boolean }>`
   }
 `;
 
-export const MenuLogo = styled.svg`
+S.MenuLogo = styled.svg`
   display: none;
   ${() => media.tablet} {
     display: block;
@@ -106,7 +109,7 @@ export const MenuLogo = styled.svg`
   }
 `;
 
-export const Exit = styled.div<{ isClicked: boolean }>`
+S.Exit = styled.div<{ isClicked: boolean }>`
   ${() => media.tablet} {
     position: relative;
     width: 42px;
@@ -120,7 +123,7 @@ export const Exit = styled.div<{ isClicked: boolean }>`
   }
 `;
 
-export const Items = styled.ul`
+S.Items = styled.ul`
   display: flex;
   position: relative;
   align-items: center;
@@ -137,7 +140,7 @@ export const Items = styled.ul`
   }
 `;
 
-export const Item = styled.li`
+S.Item = styled.li`
   position: relative;
   display: flex;
   justify-content: center;
@@ -155,12 +158,12 @@ export const Item = styled.li`
   }
 `;
 
-export const Alink = styled.a`
+S.Alink = styled.a`
   text-decoration: none;
   cursor: pointer;
 `;
 
-export const Search = styled.form`
+S.Search = styled.form`
   display: flex;
   align-items: center;
   width: fit-content;
@@ -191,7 +194,7 @@ export const Search = styled.form`
   }
 `;
 
-export const Input = styled.input`
+S.Input = styled.input`
   position: relative;
   right: 0%;
   background: #001222 0% 0% no-repeat padding-box;
@@ -213,11 +216,11 @@ export const Input = styled.input`
   }
 `;
 
-export const DataList = styled.datalist`
+S.DataList = styled.datalist`
   color: white;
 `;
 
-export const UnderLine = styled(motion.span)`
+S.UnderLine = styled(motion.span)`
   position: absolute;
   width: 50px;
   height: 1px;

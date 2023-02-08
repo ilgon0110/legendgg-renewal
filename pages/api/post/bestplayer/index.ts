@@ -27,10 +27,6 @@ const Line = {
 
 type Line = typeof Line[keyof typeof Line];
 
-interface Foo {
-  id: string;
-}
-
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   console.log('bestplayer API 실행');
   const [sessionCookie] = parseCookies(req.headers.cookie);
@@ -93,6 +89,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       },
       select: {
         description: true,
+        userId: true,
         playerList: {
           select: {
             line: true,

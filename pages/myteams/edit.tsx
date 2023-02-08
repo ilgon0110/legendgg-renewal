@@ -1,21 +1,36 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Modal from 'react-modal';
 import PostModal from '@components/postModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { IPostModalPlayerInitialState, IRootState, postModalActions } from '@store/index';
 import useMutation from '@libs/client/useMutation';
 import { Router, useRouter } from 'next/router';
-import { S } from '@styles/myteams/post';
+import useSWR, { useSWRConfig } from 'swr';
+import { S } from '@styles/myteams/edit';
 
 function MyTeamPost() {
   const { postModal } = useSelector((state: IRootState) => state);
-  const [post, { data, loading, error }] = useMutation('/api/post/bestplayer');
+  const [post, { data, loading, error }] = useMutation('/api/post/bestplayer/update');
   const router = useRouter();
+
+  //Post와 다른 코드
+  const { playerData, playerDescription, id: bestPlayerId } = router.query;
+  console.log(playerData, playerDescription);
+  const playerList = typeof playerData === 'string' ? JSON.parse(playerData) : undefined;
   useEffect(() => {
-    if (data?.ok) {
-      router.push(`${data.id}`);
-    }
-  }, [data]);
+    if (!playerData) return;
+    playerList?.forEach((v: any) => {
+      dispatch(
+        postModalActions.playerSelect({
+          line: v.line,
+          playerInfo: { name: v.name, year: v.year, season: v.season },
+          isSelected: true,
+        }),
+      );
+    });
+  }, []);
+  //끝, refactoring 필수
+  console.log(postModal);
   const [selectedLine, setSelectLine] = useState('');
   const ref = useRef<HTMLTextAreaElement>(null);
   const dispatch = useDispatch();
@@ -29,18 +44,19 @@ function MyTeamPost() {
   const closeModal = () => {
     dispatch(postModalActions.setIsOpen(false));
   };
-  const line = ['top', 'jungle', 'mid', 'bot', 'support'];
+  const lines = ['top', 'jungle', 'mid', 'bot', 'support'];
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
     //bestplayer 예외처리 진행 후 POST REQUEST
     const playerData = Object.values(postModal).slice(1);
     const playerDescription = ref?.current?.value;
     if (!playerData.every((player) => player.isSelected === true)) return;
-    post({ playerData, playerDescription });
+    post({ playerData, playerDescription, bestPlayerId });
   };
   const reSelect = (line: string) => {
     dispatch(postModalActions.playerSelect({ line: line, playerInfo: {}, isSelected: false }));
     dispatch(postModalActions.setIsOpen(true));
+    setSelectLine(line);
   };
   const customStyles = {
     content: {
@@ -59,7 +75,7 @@ function MyTeamPost() {
     <S.Container>
       <form onSubmit={handleSubmit}>
         <S.Item>
-          {line.map((line, idx) => {
+          {lines.map((line, idx) => {
             return (
               <S.ImageBox key={line}>
                 {postModal[line].isSelected ? (
@@ -98,7 +114,7 @@ function MyTeamPost() {
         <S.Item>
           <S.Description>
             <h1>팀 설명</h1>
-            <textarea rows={10} ref={ref}></textarea>
+            <textarea rows={10} ref={ref} placeholder={playerDescription?.toString()}></textarea>
           </S.Description>
         </S.Item>
         <S.Item>

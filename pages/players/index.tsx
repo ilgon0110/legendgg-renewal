@@ -6,19 +6,7 @@ import PlayerChart from '@components/PlayerChart';
 import PlayerCard1Container from '@controllers/PlayerCard1Container';
 import PlayerCard2Container from '@controllers/PlayerCard2Container';
 import { IRootState, playersActions } from '@store/index';
-import {
-  Container,
-  Item,
-  InputPlayer,
-  Search,
-  Input,
-  Error,
-  DataList,
-  Button,
-  ChartText,
-  ChartText2,
-  Chart,
-} from '@styles/players';
+import { S } from '@styles/players';
 
 interface PlayerData {
   players: string;
@@ -32,12 +20,7 @@ interface PlayerData {
 function Players() {
   const {
     playersSlice: { years, names: playersName, seasons },
-    players: {
-      isPlayerOneSelect,
-      isPlayerTwoSelect,
-      playerOneYear,
-      playerTwoYear,
-    },
+    players: { isPlayerOneSelect, isPlayerTwoSelect, playerOneYear, playerTwoYear },
   } = useSelector((state: IRootState) => state);
   const dispatch = useDispatch();
   const {
@@ -110,60 +93,44 @@ function Players() {
     return true;
   };
   return (
-    <Container>
-      <Item>
-        <InputPlayer>
+    <S.Container>
+      <S.Item>
+        <S.InputPlayer>
           {isPlayerOneSelect ? (
             <PlayerCard1Container />
           ) : (
-            <Search onSubmit={handleSubmit(PlayerOneOnValid)}>
-              <Input
-                {...register('players')}
-                list="players"
-                placeholder="선수입력"
-              />
-              <DataList id="players">
+            <S.Search onSubmit={handleSubmit(PlayerOneOnValid)}>
+              <S.Input {...register('players')} list="players" placeholder="선수입력" />
+              <S.DataList id="players">
                 {playersName.map((name) => (
                   <option value={name} key={name}></option>
                 ))}
-              </DataList>
-              <Error>{errors.players?.message}</Error>
-              <Input
-                {...register('years')}
-                list="years"
-                placeholder="연도입력"
-              ></Input>
-              <DataList id="years">
+              </S.DataList>
+              <S.Error>{errors.players?.message}</S.Error>
+              <S.Input {...register('years')} list="years" placeholder="연도입력"></S.Input>
+              <S.DataList id="years">
                 {years.map((year) => (
                   <option value={year} key={year}></option>
                 ))}
-              </DataList>
-              <Error>{errors?.years?.message}</Error>
-              <Input
-                {...register('seasons')}
-                list="seasons"
-                placeholder="시즌입력"
-              ></Input>
-              <DataList id="seasons">
+              </S.DataList>
+              <S.Error>{errors?.years?.message}</S.Error>
+              <S.Input {...register('seasons')} list="seasons" placeholder="시즌입력"></S.Input>
+              <S.DataList id="seasons">
                 {seasons.map((season) => (
                   <option value={season} key={season}></option>
                 ))}
-              </DataList>
-              <Error>{errors?.seasons?.message}</Error>
-              <Button onClick={handleSubmit(PlayerOneOnValid)}>
-                <svg
-                  fill="white"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+              </S.DataList>
+              <S.Error>{errors?.seasons?.message}</S.Error>
+              <S.Button onClick={handleSubmit(PlayerOneOnValid)}>
+                <svg fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                   <path
                     fillRule="evenodd"
                     d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
                     clipRule="evenodd"
                   ></path>
                 </svg>
-              </Button>
-              <Button type="reset">
+              </S.Button>
+              <S.Button type="reset">
                 <svg
                   fill="white"
                   xmlns="http://www.w3.org/2000/svg"
@@ -177,79 +144,53 @@ function Players() {
                     <path d="M864.2,559.6c0,201.3-162.9,364.2-364.2,364.2S135.8,760.9,135.8,559.6c0-201.3,162.9-364.2,364.2-364.2c25.2,0,49,2.6,72.8,7.9l-94,94l46.4,46.4L692,176.9L525.2,10l-46.4,46.4l76.8,76.8c-18.5-1.3-37.1-4-55.6-4c-237.1,0-430.4,193.4-430.4,430.4C69.6,796.6,262.9,990,500,990c237.1,0,430.4-193.4,430.4-430.4H864.2z" />
                   </g>
                 </svg>
-              </Button>
-            </Search>
+              </S.Button>
+            </S.Search>
           )}
-        </InputPlayer>
-      </Item>
-      <Item>
-        <ChartText>
-          {' ※13-14 시즌 선수들은 15시즌 이후 선수들과 비교가 불가능합니다.'}
-        </ChartText>
-        <ChartText2>
-          {'ex)13페이커와 21쇼메이커 비교 불가(지표 기준이 다름)'}
-        </ChartText2>
-        <Chart>
-          {isValidYear(playerOneYear, playerTwoYear) ? (
-            <PlayerChart />
-          ) : (
-            <NoCompared />
-          )}
-        </Chart>
-      </Item>
-      <Item>
-        <InputPlayer>
+        </S.InputPlayer>
+      </S.Item>
+      <S.Item>
+        <S.ChartText>{' ※13-14 시즌 선수들은 15시즌 이후 선수들과 비교가 불가능합니다.'}</S.ChartText>
+        <S.ChartText2>{'ex)13페이커와 21쇼메이커 비교 불가(지표 기준이 다름)'}</S.ChartText2>
+        <S.Chart>{isValidYear(playerOneYear, playerTwoYear) ? <PlayerChart /> : <NoCompared />}</S.Chart>
+      </S.Item>
+      <S.Item>
+        <S.InputPlayer>
           {isPlayerTwoSelect ? (
             <PlayerCard2Container />
           ) : (
-            <Search onSubmit={handleSubmit(PlayerTwoOnValid)}>
-              <Input
-                {...register('playerTwo')}
-                list="players2"
-                placeholder="선수입력"
-              />
-              <DataList id="players2">
+            <S.Search onSubmit={handleSubmit(PlayerTwoOnValid)}>
+              <S.Input {...register('playerTwo')} list="players2" placeholder="선수입력" />
+              <S.DataList id="players2">
                 {playersName.map((name) => (
                   <option value={name} key={name}></option>
                 ))}
-              </DataList>
-              <Error>{errors?.playerTwo?.message}</Error>
-              <Input
-                {...register('yearTwo')}
-                list="years2"
-                placeholder="연도입력"
-              ></Input>
-              <DataList id="years2">
+              </S.DataList>
+              <S.Error>{errors?.playerTwo?.message}</S.Error>
+              <S.Input {...register('yearTwo')} list="years2" placeholder="연도입력"></S.Input>
+              <S.DataList id="years2">
                 {years.map((year) => (
                   <option value={year} key={year}></option>
                 ))}
-              </DataList>
-              <Error>{errors?.yearTwo?.message}</Error>
-              <Input
-                {...register('seasonTwo')}
-                list="seasons2"
-                placeholder="시즌입력"
-              ></Input>
-              <DataList id="seasons2">
+              </S.DataList>
+              <S.Error>{errors?.yearTwo?.message}</S.Error>
+              <S.Input {...register('seasonTwo')} list="seasons2" placeholder="시즌입력"></S.Input>
+              <S.DataList id="seasons2">
                 {seasons.map((season) => (
                   <option value={season} key={season}></option>
                 ))}
-              </DataList>
-              <Error>{errors?.seasonTwo?.message}</Error>
-              <Button onClick={handleSubmit(PlayerTwoOnValid)}>
-                <svg
-                  fill="white"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+              </S.DataList>
+              <S.Error>{errors?.seasonTwo?.message}</S.Error>
+              <S.Button onClick={handleSubmit(PlayerTwoOnValid)}>
+                <svg fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                   <path
                     fillRule="evenodd"
                     d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
                     clipRule="evenodd"
                   ></path>
                 </svg>
-              </Button>
-              <Button type="reset">
+              </S.Button>
+              <S.Button type="reset">
                 <svg
                   fill="white"
                   xmlns="http://www.w3.org/2000/svg"
@@ -263,12 +204,12 @@ function Players() {
                     <path d="M864.2,559.6c0,201.3-162.9,364.2-364.2,364.2S135.8,760.9,135.8,559.6c0-201.3,162.9-364.2,364.2-364.2c25.2,0,49,2.6,72.8,7.9l-94,94l46.4,46.4L692,176.9L525.2,10l-46.4,46.4l76.8,76.8c-18.5-1.3-37.1-4-55.6-4c-237.1,0-430.4,193.4-430.4,430.4C69.6,796.6,262.9,990,500,990c237.1,0,430.4-193.4,430.4-430.4H864.2z" />
                   </g>
                 </svg>
-              </Button>
-            </Search>
+              </S.Button>
+            </S.Search>
           )}
-        </InputPlayer>
-      </Item>
-    </Container>
+        </S.InputPlayer>
+      </S.Item>
+    </S.Container>
   );
 }
 export default Players;

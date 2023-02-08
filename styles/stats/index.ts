@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 import { media } from '../../styles/theme';
 
-export const Container = styled.div`
+export interface IStyle {
+  [key: string]: any;
+}
+
+export const S: IStyle = {};
+
+S.Container = styled.div`
   display: grid;
   column-gap: 30px;
   padding-top: 52px;
@@ -14,7 +20,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Item = styled.div`
+S.Item = styled.div`
   &:nth-child(1) {
     border: 1px solid red;
     background-color: #122a47;
@@ -37,7 +43,7 @@ export const Item = styled.div`
     }
   }
 `;
-export const Profile = styled.div`
+S.Profile = styled.div`
   position: sticky;
   top: 56px;
   background: transparent;
@@ -47,7 +53,7 @@ export const Profile = styled.div`
     height: 70%;
   }
 `;
-export const Img = styled.img`
+S.Img = styled.img`
   position: relative;
   display: block;
   width: 170px;
@@ -65,7 +71,7 @@ export const Img = styled.img`
     left: 10%;
   }
 `;
-export const Logo = styled.img`
+S.Logo = styled.img`
   position: relative;
   display: block;
   width: 32px;
@@ -80,7 +86,7 @@ export const Logo = styled.img`
     margin-top: -72px;
   }
 `;
-export const LogoName = styled.h1`
+S.LogoName = styled.h1`
   position: relative;
   text-align: center;
   color: white;
@@ -92,7 +98,7 @@ export const LogoName = styled.h1`
     font-size: 8px;
   }
 `;
-export const WinBar = styled.div`
+S.WinBar = styled.div`
   position: relative;
   margin: 0 auto;
   width: 80%;
@@ -108,7 +114,7 @@ export const WinBar = styled.div`
     height: 10px;
   }
 `;
-export const WinRateBar = styled.div<{ winrate: number | undefined }>`
+S.WinRateBar = styled.div<{ winrate: number | undefined }>`
   position: relative;
   width: ${(props) => props.winrate}%;
   height: 24px;
@@ -120,7 +126,7 @@ export const WinRateBar = styled.div<{ winrate: number | undefined }>`
     height: 10px;
   }
 `;
-export const WinRate = styled.h1`
+S.WinRate = styled.h1`
   position: relative;
   text-align: center;
   top: 36px;
@@ -132,7 +138,7 @@ export const WinRate = styled.h1`
     font-size: 8px;
   }
 `;
-export const WinRateRank = styled.span`
+S.WinRateRank = styled.span`
   padding-left: 4px;
   font-size: 12px;
   font-weight: 300;
@@ -141,7 +147,7 @@ export const WinRateRank = styled.span`
     font-size: 8px;
   }
 `;
-export const Year = styled.h1`
+S.Year = styled.h1`
   position: relative;
   text-align: center;
   top: 52px;
@@ -156,7 +162,7 @@ export const Year = styled.h1`
     font-size: 12px;
   }
 `;
-export const Season = styled.span`
+S.Season = styled.span`
   padding-left: 8px;
   font-size: 16px;
   ${() => media.mobile} {
@@ -164,7 +170,7 @@ export const Season = styled.span`
     font-size: 10px;
   }
 `;
-export const ChartBox = styled.div`
+S.ChartBox = styled.div`
   position: relative;
   margin: 0 auto;
   width: 100%;
@@ -184,7 +190,7 @@ export const ChartBox = styled.div`
     right: 3%;
   }
 `;
-export const SeasonNavbar = styled.div`
+S.SeasonNavbar = styled.div`
   background-color: #122a47;
   position: fixed;
   width: 100%;
@@ -196,7 +202,7 @@ export const SeasonNavbar = styled.div`
     height: 30px;
   }
 `;
-export const YearSelect = styled.select`
+S.YearSelect = styled.select`
   color: white;
   border: none;
   background: transparent;
@@ -221,7 +227,7 @@ export const YearSelect = styled.select`
   }
 `;
 
-export const SeasonSelect = styled.span<{ opacity: number }>`
+S.SeasonSelect = styled.span<{ opacity: number }>`
   font-size: 20px;
   color: white;
   padding: 32px;
@@ -241,7 +247,7 @@ export const SeasonSelect = styled.span<{ opacity: number }>`
   }
 `;
 
-export const StatBox = styled.div`
+S.StatBox = styled.div`
   position: relative;
   margin-top: 32px;
   width: 100%;
@@ -301,7 +307,7 @@ export const StatBox = styled.div`
     }
   }
 `;
-export const CareerText = styled.h1`
+S.CareerText = styled.h1`
   position: relative;
   color: white;
   margin-top: 68px;
@@ -310,7 +316,7 @@ export const CareerText = styled.h1`
     font-size: 12px;
   }
 `;
-export const CareerBox = styled.div`
+S.CareerBox = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: repeat(3, 1fr);
@@ -366,7 +372,7 @@ export const CareerBox = styled.div`
     background: #0a2742;
   }
 `;
-export const PlayerSaying = styled.h1`
+S.PlayerSaying = styled.h1`
   position: relative;
   color: white;
   text-align: center;

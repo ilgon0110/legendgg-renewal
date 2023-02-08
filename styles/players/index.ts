@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import { media } from '@styles/theme';
+import { IStyle } from '@styles/stats';
 
-export const Container = styled.div`
+export const S: IStyle = {};
+
+S.Container = styled.div`
   width: 100%;
   height: 100vh;
   overflow: hidden;
@@ -21,7 +24,7 @@ export const Container = styled.div`
     padding-top: 64px;
   }
 `;
-export const Item = styled.div`
+S.Item = styled.div`
   position: relative;
   &:nth-child(1) {
     border: 1px solid red;
@@ -57,7 +60,7 @@ export const Item = styled.div`
     }
   }
 `;
-export const InputPlayer = styled.div`
+S.InputPlayer = styled.div`
   position: relative;
   width: 100%;
   height: 536px;
@@ -73,9 +76,9 @@ export const InputPlayer = styled.div`
     transform: translate(0%, 0%);
   }
 `;
-export const Search = styled.form``;
+S.Search = styled.form``;
 
-export const Input = styled.input`
+S.Input = styled.input`
   position: relative;
   width: 80%;
   height: 32px;
@@ -93,7 +96,7 @@ export const Input = styled.input`
     margin-bottom: 16px;
   }
 `;
-export const Error = styled.span`
+S.Error = styled.span`
   display: block;
   position: relative;
   color: #fadc44;
@@ -104,10 +107,10 @@ export const Error = styled.span`
   margin-left: 27px;
   line-height: 10px;
 `;
-export const DataList = styled.datalist`
+S.DataList = styled.datalist`
   color: white;
 `;
-export const ChartText = styled.h1`
+S.ChartText = styled.h1`
   position: relative;
   text-align: center;
   color: white;
@@ -119,7 +122,7 @@ export const ChartText = styled.h1`
     line-height: 24px;
   }
 `;
-export const ChartText2 = styled.h1`
+S.ChartText2 = styled.h1`
   position: relative;
   text-align: center;
   color: ${(props) => props.theme.color.mint};
@@ -131,7 +134,7 @@ export const ChartText2 = styled.h1`
     font-weight: normal;
   }
 `;
-export const Chart = styled.div`
+S.Chart = styled.div`
   position: relative;
   width: 100%;
   height: 50%;
@@ -144,7 +147,7 @@ export const Chart = styled.div`
     height: 100%;
   }
 `;
-export const Button = styled.button`
+S.Button = styled.button`
   position: relative;
   display: inline-block;
   margin: 0 16px;

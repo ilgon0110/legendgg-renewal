@@ -19,7 +19,7 @@ const Line = {
 type Line = typeof Line[keyof typeof Line];
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const [sessionCookie] = parseCookies(req.headers.cookie);
+  const [csrfToken, __, sessionCookie] = parseCookies(req.headers.cookie);
   const [_, cookieValue] = sessionCookie;
   const {
     body: { playerData, playerDescription },
@@ -32,12 +32,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         sessionToken: cookieValue,
       },
     });
+    if (!session) throw new Error('No Session');
 
     const user = await client.user.findUnique({
       where: {
-        id: session?.userId,
+        id: session.userId,
       },
     });
+
     const bestPlayer = await client.bestPlayer.create({
       data: {
         image: '',
@@ -49,7 +51,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         },
       },
     });
-
+    console.log(sessionCookie, session, user, bestPlayer);
     playerData.forEach(async (player: any, idx: any) => {
       await client.playerList.create({
         data: {

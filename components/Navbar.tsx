@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { signIn, useSession, signOut } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { S } from '../styles/components/Navbar';
 import SearchLogoSvg from 'assets/SearchLogoSvg';
 import LogoSvg from 'assets/LogoSvg';

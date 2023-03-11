@@ -1,0 +1,154 @@
+{
+  "quote": "화려한 실력. 템퍼링의 창시자",
+  "2013": {
+    "spring": {
+      "id": 951207,
+      "team": "KT Rolster Arrows",
+      "kda": 4.2,
+      "kdaRank": 5,
+      "kp": 73,
+      "kpRank": 4,
+      "dth": 18.3,
+      "dthRank": 2,
+      "gold": null,
+      "goldRank": null,
+      "winRate": 30,
+      "winRateRank": 10,
+      "groupRank": 5,
+      "playoffRank": null,
+      "pogpoint": 100,
+      "pogpointRank": 24
+    },
+    "summer": {
+      "id": 951207,
+      "team": "KT Rolster Bullets",
+      "kda": 4.2,
+      "kdaRank": 3,
+      "kp": 69.4,
+      "kpRank": 7,
+      "dth": 22.1,
+      "dthRank": 10,
+      "gold": 14.3,
+      "goldRank": 5,
+      "winRate": 63,
+      "winRateRank": 3,
+      "groupRank": 2,
+      "playoffRank": 2,
+      "pogpoint": 150,
+      "pogpointRank": 23
+    },
+    "world": {}
+  },
+  "2014": {
+    "spring": {
+      "id": 951207,
+      "team": "KT Rolster Arrows",
+      "kda": 4.6,
+      "kdaRank": 2,
+      "kp": 61.8,
+      "kpRank": 13,
+      "dth": 21.8,
+      "dthRank": 9,
+      "gold": 18.8,
+      "goldRank": 1,
+      "winRate": 50,
+      "winRateRank": 6,
+      "groupRank": 1,
+      "playoffRank": 8,
+      "pogpoint": 100,
+      "pogpointRank": 28
+    },
+    "summer": {
+      "id": 951207,
+      "team": "KT Rolster Arrows",
+      "kda": 4.5,
+      "kdaRank": 3,
+      "kp": 68.7,
+      "kpRank": 4,
+      "dth": 19.4,
+      "dthRank": 4,
+      "gold": 16.8,
+      "goldRank": 3,
+      "winRate": 67,
+      "winRateRank": 3,
+      "groupRank": 1,
+      "playoffRank": 1,
+      "pogpoint": 1050,
+      "pogpointRank": 1
+    },
+    "world": {}
+  },
+  "2015": {
+    "spring": {},
+    "summer": {},
+    "world": {
+      "id": 951207,
+      "team": "Invictus Gaming",
+      "winRate": 33,
+      "winRateRank": 10,
+      "kda": 3.6,
+      "kdaRank": 6,
+      "gd10": 121,
+      "gd10Rank": 4,
+      "cs10": 1,
+      "cs10Rank": 6,
+      "dpm": 208,
+      "dpmRank": 13,
+      "dmg": 13.7,
+      "dmgRank": 7,
+      "groupRank": 4,
+      "playoffRank": null,
+      "pogpoint": null,
+      "pogpointRank": null
+    }
+  },
+  "2016": {
+    "spring": {},
+    "summer": {},
+    "world": {}
+  },
+  "2017": {
+    "spring": {
+      "id": 951207,
+      "team": "Misfits Gaming",
+      "winRate": 61,
+      "winRateRank": 4,
+      "kda": 5.2,
+      "kdaRank": 2,
+      "gd10": 180,
+      "gd10Rank": 2,
+      "cs10": 0.2,
+      "cs10Rank": 6,
+      "dpm": 246,
+      "dpmRank": 11,
+      "dmg": 14.5,
+      "dmgRank": 9,
+      "groupRank": 2,
+      "playoffRank": 4,
+      "pogpoint": 400,
+      "pogpointRank": 2
+    },
+    "summer": {},
+    "world": {}
+  },
+  "2018": {
+    "spring": {},
+    "summer": {},
+    "world": {}
+  },
+  "2019": {
+    "spring": {},
+    "summer": {},
+    "world": {}
+  },
+  "2020": {
+    "spring": {},
+    "summer": {},
+    "world": {}
+  },
+  "2021": {
+    "spring": {},
+    "summer": {},
+    "world": {}
+  }
+}

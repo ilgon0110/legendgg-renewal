@@ -1,0 +1,192 @@
+{
+  "quote": "페이커 이전에 매드라이프가 있었다.",
+  "2013": {
+    "spring": {
+      "id": 921005,
+      "team": "CJ Entus Frost",
+      "kda": 4.1,
+      "kdaRank": 3,
+      "kp": 72.9,
+      "kpRank": 4,
+      "dth": 17.3,
+      "dthRank": 2,
+      "gold": 9,
+      "goldRank": 5,
+      "winRate": 54,
+      "winRateRank": 5,
+      "groupRank": 1,
+      "playoffRank": 4,
+      "pogpoint": 150,
+      "pogpointRank": 23
+    },
+    "summer": {
+      "id": 921005,
+      "team": "CJ Entus Frost",
+      "kda": 4.2,
+      "kdaRank": 5,
+      "kp": 73,
+      "kpRank": 6,
+      "dth": 22,
+      "dthRank": 9,
+      "gold": 11.3,
+      "goldRank": 3,
+      "winRate": 59,
+      "winRateRank": 5,
+      "groupRank": 1,
+      "playoffRank": 4,
+      "pogpoint": 200,
+      "pogpointRank": 15
+    },
+    "world": {}
+  },
+  "2014": {
+    "spring": {
+      "id": 921005,
+      "team": "CJ Entus Frost",
+      "kda": 3.7,
+      "kdaRank": 4,
+      "kp": 62.7,
+      "kpRank": 12,
+      "dth": 21.9,
+      "dthRank": 6,
+      "gold": 10.3,
+      "goldRank": 12,
+      "winRate": 50,
+      "winRateRank": 8,
+      "groupRank": 2,
+      "playoffRank": 8,
+      "pogpoint": 100,
+      "pogpointRank": 28
+    },
+    "summer": {
+      "id": 921005,
+      "team": "CJ Entus Frost",
+      "kda": 3.3,
+      "kdaRank": 6,
+      "kp": 80,
+      "kpRank": 2,
+      "dth": 21.3,
+      "dthRank": 8,
+      "gold": null,
+      "goldRank": null,
+      "winRate": 50,
+      "winRateRank": 6,
+      "groupRank": 3,
+      "playoffRank": null,
+      "pogpoint": 0,
+      "pogpointRank": null
+    },
+    "world": {}
+  },
+  "2015": {
+    "spring": {
+      "id": 921005,
+      "team": "CJ Entus",
+      "winRate": 63,
+      "winRateRank": 4,
+      "kda": 4,
+      "kdaRank": 3,
+      "gd10": -22,
+      "gd10Rank": 10,
+      "cs10": -0.8,
+      "cs10Rank": 10,
+      "dpm": 136,
+      "dpmRank": 3,
+      "dmg": 7.1,
+      "dmgRank": 6,
+      "groupRank": 3,
+      "playoffRank": 4,
+      "pogpoint": 400,
+      "pogpointRank": 10
+    },
+    "summer": {
+      "id": 921005,
+      "team": "CJ Entus",
+      "winRate": 64,
+      "winRateRank": 3,
+      "kda": 4.4,
+      "kdaRank": 4,
+      "gd10": 9,
+      "gd10Rank": 7,
+      "cs10": 1.5,
+      "cs10Rank": 2,
+      "dpm": 147,
+      "dpmRank": 2,
+      "dmg": 7,
+      "dmgRank": 7,
+      "groupRank": 3,
+      "playoffRank": 4,
+      "pogpoint": 600,
+      "pogpointRank": 10
+    },
+    "world": {}
+  },
+  "2016": {
+    "spring": {
+      "id": 921005,
+      "team": "CJ Entus",
+      "winRate": 41,
+      "winRateRank": 8,
+      "kda": 3.6,
+      "kdaRank": 8,
+      "gd10": -9,
+      "gd10Rank": 7,
+      "cs10": -0.3,
+      "cs10Rank": 9,
+      "dpm": 114,
+      "dpmRank": 5,
+      "dmg": 6.5,
+      "dmgRank": 5,
+      "groupRank": 8,
+      "playoffRank": null,
+      "pogpoint": 500,
+      "pogpointRank": 16
+    },
+    "summer": {
+      "id": 921005,
+      "team": "CJ Entus",
+      "winRate": 27,
+      "winRateRank": 12,
+      "kda": 2.8,
+      "kdaRank": 9,
+      "gd10": -28,
+      "gd10Rank": 9,
+      "cs10": 0.9,
+      "cs10Rank": 11,
+      "dpm": 134,
+      "dpmRank": 4,
+      "dmg": 7.8,
+      "dmgRank": 1,
+      "groupRank": 10,
+      "playoffRank": null,
+      "pogpoint": 0,
+      "pogpointRank": null
+    },
+    "world": {}
+  },
+  "2017": {
+    "spring": {},
+    "summer": {},
+    "world": {}
+  },
+  "2018": {
+    "spring": {},
+    "summer": {},
+    "world": {}
+  },
+  "2019": {
+    "spring": {},
+    "summer": {},
+    "world": {}
+  },
+  "2020": {
+    "spring": {},
+    "summer": {},
+    "world": {}
+  },
+  "2021": {
+    "spring": {},
+    "summer": {},
+    "world": {}
+  }
+}

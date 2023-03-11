@@ -10,13 +10,19 @@ S.Container = styled.div`
   display: grid;
   justify-content: center;
   grid-template-rows: fit-content();
+
+  ${() => media.tablet} {
+    grid-template-columns: repeat(8, 1fr);
+  }
 `;
 
 S.Item = styled.div`
   position: relative;
+  color: white;
   margin-top: 56px;
   margin-left: 15%;
   margin-right: 15%;
+
   &:nth-child(1) {
     display: flex;
   }

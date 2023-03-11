@@ -8,14 +8,9 @@ import { Provider } from 'react-redux';
 import { store } from '@store/index';
 import { SWRConfig } from 'swr';
 import { SessionProvider } from 'next-auth/react';
+import { fetcherAndParsing } from '@utilities/index';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const fetcher = (url: string) =>
-    fetch(url)
-      .then((res) => res.json())
-      .then((json) => json)
-      .then((json) => JSON.parse(json));
-
   return (
     <>
       <Head>
@@ -25,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <GlobalStyle />
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <SWRConfig value={{ fetcher: fetcher }}>
+          <SWRConfig value={{ fetcher: fetcherAndParsing }}>
             <SessionProvider session={pageProps.session}>
               <Layout>
                 <Component {...pageProps} />

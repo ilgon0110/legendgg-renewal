@@ -15,7 +15,7 @@ export default function MyTeams() {
           <Link href={'/myteams/post'} passHref legacyBehavior>
             <S.Post />
           </Link>
-          {data?.allPlayers.map((players) => (
+          {data?.allPlayers.map((players: any) => (
             <S.Item key={players.id}>
               <Link href={`/myteams/${players.id}`}>
                 <S.ImageBox></S.ImageBox>

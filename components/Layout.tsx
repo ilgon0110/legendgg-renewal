@@ -3,16 +3,6 @@ import Navbar from './Navbar';
 import Seo from './Seo';
 import styled from 'styled-components';
 
-const Footer = styled.footer`
-  position: fixed;
-  display: block;
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  font-weight: lighter;
-  color: white;
-  bottom: 18px;
-`;
 export default function Layout({ children }: React.PropsWithChildren) {
   return (
     <>
@@ -24,3 +14,14 @@ export default function Layout({ children }: React.PropsWithChildren) {
     </>
   );
 }
+
+const Footer = styled.footer`
+  position: fixed;
+  display: block;
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  font-weight: lighter;
+  color: white;
+  bottom: 18px;
+`;

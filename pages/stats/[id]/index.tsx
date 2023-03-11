@@ -6,54 +6,8 @@ import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import { S } from '@styles/stats';
 import NoData from '@components/NoData';
-import { setRank } from '@utilities/index';
+import { getChartData, setRank, useOpacity } from '@utilities/index';
 
-export interface IplayerData {
-  id?: number;
-  team?: string;
-  kda?: number;
-  kdaRank?: number;
-  kp?: number;
-  kpRank?: number;
-  gd10?: number;
-  gd10Rank?: number;
-  dth?: number;
-  dthRank?: number;
-  gold?: number;
-  goldRank?: number;
-  winRate?: number;
-  winRateRank?: number;
-  cs10?: number;
-  cs10Rank?: number;
-  dpm?: number;
-  dpmRank?: number;
-  dmg?: number;
-  dmgRank?: number;
-  groupRank?: number;
-  playoffRank?: number;
-  pogpoint?: number;
-  pogpointRank?: number;
-}
-
-interface SeasonData {
-  spring: IplayerData;
-  summer: IplayerData;
-  world: IplayerData;
-}
-
-interface Data {
-  [key: string]: any;
-  quote: string;
-  '2013': SeasonData;
-  '2014': SeasonData;
-  '2015': SeasonData;
-  '2016': SeasonData;
-  '2017': SeasonData;
-  '2018': SeasonData;
-  '2019': SeasonData;
-  '2020': SeasonData;
-  '2021': SeasonData;
-}
 const ApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 });
@@ -62,39 +16,10 @@ const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({ data, pl
   const playerData: Data = JSON.parse(data);
   const [selectedYear, setSelectedYear] = useState('2013');
   const [selectedSeason, setSelectedSeason] = useState('spring');
-  const [seasonOpacity, setSeasonOpacity] = useState({
-    spring: 1,
-    summer: 0.5,
-    world: 0.5,
-  });
+  const [seasonOpacity, setSeasonOpacity] = useOpacity();
   const SELECT_STAT: IplayerData = playerData[selectedYear][selectedSeason];
-  const chartDataHandler = (num: number | undefined) => {
-    if (num === undefined) return 0;
-    return num;
-  };
 
-  const chartData = [
-    {
-      x: 'KDA',
-      y: chartDataHandler(SELECT_STAT.kda) * 10,
-    },
-    {
-      x: 'KP',
-      y: Number(selectedYear) < 2015 ? chartDataHandler(SELECT_STAT.kp) : chartDataHandler(SELECT_STAT.gd10),
-    },
-    {
-      x: 'DTH',
-      y: Number(selectedYear) < 2015 ? chartDataHandler(SELECT_STAT.dth) : chartDataHandler(SELECT_STAT.cs10) * 10,
-    },
-    {
-      x: 'GOLD',
-      y: Number(selectedYear) < 2015 ? chartDataHandler(SELECT_STAT.gold) : chartDataHandler(SELECT_STAT.dpm) / 10,
-    },
-    {
-      x: 'WIN',
-      y: Number(selectedYear) < 2015 ? chartDataHandler(SELECT_STAT.winRate) : chartDataHandler(SELECT_STAT.dmg),
-    },
-  ];
+  const chartData = getChartData(SELECT_STAT, selectedYear);
 
   const yearLists = Object.keys(playerData).filter((e) => e !== 'quote');
   const handleYear = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -105,13 +30,7 @@ const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({ data, pl
     const eventTarget = event.target as HTMLElement;
     const targetSeason = eventTarget.innerHTML.toLowerCase();
     setSelectedSeason(targetSeason);
-    changeSeasonOpacity(targetSeason);
-  };
-
-  const changeSeasonOpacity = (season: string) => {
-    let opacity = { spring: 0.5, summer: 0.5, world: 0.5 };
-    opacity[season as keyof typeof opacity] = 1;
-    setSeasonOpacity(opacity);
+    setSeasonOpacity(targetSeason);
   };
 
   return (
@@ -287,13 +206,6 @@ const StatOfPlayer: NextPage<{ data: string; playerName: string }> = ({ data, pl
                 <h1>POG포인트</h1>
               </div>
             </S.CareerBox>
-            <div
-              style={{
-                width: '200px',
-                height: '1000px',
-                border: '1px solid blue',
-              }}
-            ></div>
           </>
         ) : (
           <NoData year={selectedYear} season={selectedSeason}></NoData>
@@ -316,3 +228,50 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 export default StatOfPlayer;
+
+export interface IplayerData {
+  id?: number;
+  team?: string;
+  kda?: number;
+  kdaRank?: number;
+  kp?: number;
+  kpRank?: number;
+  gd10?: number;
+  gd10Rank?: number;
+  dth?: number;
+  dthRank?: number;
+  gold?: number;
+  goldRank?: number;
+  winRate?: number;
+  winRateRank?: number;
+  cs10?: number;
+  cs10Rank?: number;
+  dpm?: number;
+  dpmRank?: number;
+  dmg?: number;
+  dmgRank?: number;
+  groupRank?: number;
+  playoffRank?: number;
+  pogpoint?: number;
+  pogpointRank?: number;
+}
+
+interface SeasonData {
+  spring: IplayerData;
+  summer: IplayerData;
+  world: IplayerData;
+}
+
+interface Data {
+  [key: string]: any;
+  quote: string;
+  '2013': SeasonData;
+  '2014': SeasonData;
+  '2015': SeasonData;
+  '2016': SeasonData;
+  '2017': SeasonData;
+  '2018': SeasonData;
+  '2019': SeasonData;
+  '2020': SeasonData;
+  '2021': SeasonData;
+}

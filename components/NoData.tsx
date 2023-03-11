@@ -1,6 +1,19 @@
 import styled from 'styled-components';
 import { media } from '@styles/theme';
 
+function NoData({ year, season }: PropsType) {
+  return (
+    <Wrapper>
+      <Loading>
+        {year}년 {season}의 지표가 없습니다!
+      </Loading>
+      <Text>지표 도입시기 - LPL, LCS : 18시즌</Text>
+    </Wrapper>
+  );
+}
+
+export default NoData;
+
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
@@ -38,15 +51,8 @@ const Text = styled.h2`
     font-size: 14px;
   }
 `;
-function NoData({ year, season }: { year: string; season: string }) {
-  return (
-    <Wrapper>
-      <Loading>
-        {year}년 {season}의 지표가 없습니다!
-      </Loading>
-      <Text>지표 도입시기 - LPL, LCS : 18시즌</Text>
-    </Wrapper>
-  );
-}
 
-export default NoData;
+interface PropsType {
+  year: string;
+  season: string;
+}

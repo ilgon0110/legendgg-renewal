@@ -1,20 +1,11 @@
 import client from '@libs/client/prismadb';
 import withHandler from '@libs/server/withHandler';
+import { parseCookies } from '@utilities/index';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { unstable_getServerSession } from 'next-auth';
-import { getCsrfToken } from 'next-auth/react';
-import { resolve } from 'path';
 
 type Data = {
   ok: boolean;
   [key: string]: any;
-};
-
-const parseCookies = (cookie = '') => {
-  return cookie
-    .split(';')
-    .map((v) => v.split('='))
-    .map(([key, ...value]) => [key, value.join('=')]);
 };
 
 const Line = {
@@ -28,9 +19,8 @@ const Line = {
 type Line = typeof Line[keyof typeof Line];
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  console.log('bestplayer API 실행');
   const [sessionCookie] = parseCookies(req.headers.cookie);
-  const [cookieName, cookieValue] = sessionCookie;
+  const [_, cookieValue] = sessionCookie;
   const {
     body: { playerData, playerDescription },
     query: { id },
@@ -60,7 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       },
     });
 
-    playerData.forEach(async (player, idx) => {
+    playerData.forEach(async (player: any, idx: any) => {
       await client.playerList.create({
         data: {
           line: Line[idx as keyof typeof Line],
@@ -100,7 +90,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         },
       },
     });
-    console.log(players);
+
     res.status(200).json({ ok: true, players });
   }
 };

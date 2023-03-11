@@ -15,6 +15,9 @@ S.Container = styled.div`
   column-gap: 30px;
   margin: 0 auto;
   box-sizing: border-box;
+  ${() => media.tablet} {
+    grid-template-columns: repeat(8, 1fr);
+  }
 `;
 
 S.Item = styled.div`

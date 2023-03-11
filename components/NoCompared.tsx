@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 import { media } from '@styles/theme';
 
+function NoCompared() {
+  return (
+    <Wrapper>
+      <Loading>13-14시즌 선수들은 15시즌 이후 선수들과 비교가 불가능합니다.</Loading>
+    </Wrapper>
+  );
+}
+
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
@@ -29,23 +37,5 @@ const Loading = styled.h1`
     font-size: 16px;
   }
 `;
-const Text = styled.h2`
-  color: white;
-  font-size: 20px;
-  font-weight: normal;
-  text-align: center;
-  ${() => media.tablet} {
-    font-size: 14px;
-  }
-`;
-function NoCompared() {
-  return (
-    <Wrapper>
-      <Loading>
-        13-14시즌 선수들은 15시즌 이후 선수들과 비교가 불가능합니다.
-      </Loading>
-    </Wrapper>
-  );
-}
 
 export default NoCompared;

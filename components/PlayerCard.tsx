@@ -3,17 +3,7 @@ import { S } from '@styles/components/PlayerCard';
 import { IplayerData } from '../pages/stats/[id]';
 import { setRank } from '../utilities';
 
-const PlayerCard = ({
-  name,
-  year,
-  season,
-  data,
-}: {
-  name: string;
-  year: string;
-  season: string;
-  data: IplayerData | undefined;
-}) => {
+const PlayerCard = ({ name, year, season, data }: PropTypes) => {
   return (
     <S.Wrapper>
       <>
@@ -99,3 +89,10 @@ const PlayerCard = ({
 };
 
 export default PlayerCard;
+
+interface PropTypes {
+  name: string;
+  year: string;
+  season: string;
+  data: IplayerData | undefined;
+}

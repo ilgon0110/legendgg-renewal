@@ -1,23 +1,26 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Modal from 'react-modal';
 import PostModal from '@components/postModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { IPostModalPlayerInitialState, IRootState, postModalActions } from '@store/index';
+import { IRootState, postModalActions } from '@store/index';
 import useMutation from '@libs/client/useMutation';
-import { Router, useRouter } from 'next/router';
-import useSWR, { useSWRConfig } from 'swr';
+import { useRouter } from 'next/router';
 import { S } from '@styles/myteams/edit';
 
 function MyTeamPost() {
   const { postModal } = useSelector((state: IRootState) => state);
-  const [post, { data, loading, error }] = useMutation('/api/post/bestplayer/update');
+  const [post, { data }] = useMutation('/api/post/bestplayer/update');
   const router = useRouter();
-
-  //Post와 다른 코드
   const { playerData, playerDescription, id: bestPlayerId } = router.query;
-  console.log(playerData, playerDescription);
-  const playerList = typeof playerData === 'string' ? JSON.parse(playerData) : undefined;
+
   useEffect(() => {
+    if (data?.ok) {
+      router.push(`/myteams/${bestPlayerId}`);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const playerList = typeof playerData === 'string' ? JSON.parse(playerData) : undefined;
     if (!playerData) return;
     playerList?.forEach((v: any) => {
       dispatch(
@@ -29,8 +32,7 @@ function MyTeamPost() {
       );
     });
   }, []);
-  //끝, refactoring 필수
-  console.log(postModal);
+
   const [selectedLine, setSelectLine] = useState('');
   const ref = useRef<HTMLTextAreaElement>(null);
   const dispatch = useDispatch();
@@ -58,18 +60,7 @@ function MyTeamPost() {
     dispatch(postModalActions.setIsOpen(true));
     setSelectLine(line);
   };
-  const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-      width: '70%',
-      height: '550px',
-    },
-  };
+
   Modal.setAppElement('#__next');
   return (
     <S.Container>
@@ -126,3 +117,16 @@ function MyTeamPost() {
 }
 
 export default MyTeamPost;
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    width: '70%',
+    height: '550px',
+  },
+};

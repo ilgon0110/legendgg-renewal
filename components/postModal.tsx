@@ -1,69 +1,65 @@
 import NoData from '@components/NoData';
 import { IRootState, postModalActions } from '@store/index';
-import { setRank } from '@utilities/index';
+import { setRank, useOpacity } from '@utilities/index';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { S } from '@styles/components/postModal';
 import useSWR, { useSWRConfig } from 'swr';
 
-function PostModal({ line }: { line: string }) {
+function PostModal({ line }: PropTypes) {
   const dispatch = useDispatch();
   const [playerInfo, setPlayerInfo] = useState({ name: 'ambition', year: '2013', season: 'spring' });
   const { data, isLoading } = useSWR(`/api/player?name=${playerInfo.name}`);
-  console.log(data);
-  const playerData = data ? data[playerInfo.year][playerInfo.season] : {};
   const { mutate } = useSWRConfig();
+  const playerData = data ? data[playerInfo.year][playerInfo.season] : {};
+  const [seasonOpacity, setSeasonOpacity] = useOpacity();
+
   useEffect(() => {
     mutate(`/api/player?name=${playerInfo.name}`);
   }, [playerInfo.name]);
+
   const {
-    playersSlice: { years, names, seasons },
+    playersSlice: { years, names },
   } = useSelector((state: IRootState) => state);
-  const handleName = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setPlayerInfo((prev) => {
-      return { ...prev, name: event.target.value };
-    });
-  };
-  const handleYear = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setPlayerInfo((prev) => {
-      return { ...prev, year: event.target.value };
-    });
-  };
-  const handleSeason = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const targetSeason = event.target.value.toLowerCase();
-    changeSeasonOpacity(targetSeason);
-    setPlayerInfo((prev) => {
-      return { ...prev, season: event.target.value };
-    });
-  };
-  const [seasonOpacity, setSeasonOpacity] = useState({
-    spring: 1,
-    summer: 0.5,
-    world: 0.5,
-  });
-  const changeSeasonOpacity = (season: string) => {
-    let opacity = { spring: 0.5, summer: 0.5, world: 0.5 };
-    opacity[season as keyof typeof opacity] = 1;
-    setSeasonOpacity(opacity);
+  const handleSelector = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, name, value } = event.target;
+    if (id === 'name') {
+      setPlayerInfo((prev) => {
+        return { ...prev, name: value };
+      });
+    }
+
+    if (id === 'year') {
+      setPlayerInfo((prev) => {
+        return { ...prev, year: value };
+      });
+    }
+    if (name === 'season') {
+      setSeasonOpacity(value.toLowerCase());
+      setPlayerInfo((prev) => {
+        return { ...prev, season: value };
+      });
+    }
   };
 
   const onSubmit = () => {
     dispatch(postModalActions.setIsOpen(false));
     dispatch(postModalActions.playerSelect({ line: line, playerInfo, isSelected: true }));
   };
+
   return (
     <S.Container>
       <S.Item>
         <S.Title>{`최고의 ${line}을 선택해주세요.`}</S.Title>
         <S.SeasonNavbar>
-          <S.NameSelect id="name" onChange={handleName}>
+          <S.NameSelect id="name" onChange={handleSelector}>
             {names.map((name) => (
               <option value={name} key={name}>
                 {name}
               </option>
             ))}
           </S.NameSelect>
-          <S.NameSelect id="year" onChange={handleYear}>
+          <S.NameSelect id="year" onChange={handleSelector}>
             {years.map((year) => (
               <option value={year} key={year}>
                 {year}
@@ -71,15 +67,15 @@ function PostModal({ line }: { line: string }) {
             ))}
           </S.NameSelect>
           <label>
-            <S.Radio type={'radio'} name={'season'} value={'spring'} defaultChecked onChange={handleSeason} />
+            <S.Radio type={'radio'} name={'season'} value={'spring'} defaultChecked onChange={handleSelector} />
             <S.SeasonSelect opacity={seasonOpacity.spring}>Spring</S.SeasonSelect>
           </label>
           <label>
-            <S.Radio type={'radio'} name={'season'} value={'summer'} onChange={handleSeason} />
+            <S.Radio type={'radio'} name={'season'} value={'summer'} onChange={handleSelector} />
             <S.SeasonSelect opacity={seasonOpacity.summer}>Summer</S.SeasonSelect>
           </label>
           <label>
-            <S.Radio type={'radio'} name={'season'} value={'world'} onChange={handleSeason} />
+            <S.Radio type={'radio'} name={'season'} value={'world'} onChange={handleSelector} />
             <S.SeasonSelect opacity={seasonOpacity.world}>World</S.SeasonSelect>
           </label>
         </S.SeasonNavbar>
@@ -177,3 +173,7 @@ function PostModal({ line }: { line: string }) {
 }
 
 export default PostModal;
+
+interface PropTypes {
+  line: string;
+}

@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
-import { motion } from 'framer-motion';
 import { media } from '@styles/theme';
 import { IStyle } from '@styles/stats';
+import { motion } from 'framer-motion';
 
 export const S: IStyle = {};
 

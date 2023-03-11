@@ -6,29 +6,11 @@ import { useEffect, useState } from 'react';
 import { IplayerData } from '@pages/stats/[id]';
 import PlayerCard from '@components/PlayerCard';
 
-const Button = styled.button`
-  display: block;
-  margin: 0 auto;
-  margin-bottom: 12px;
-  border-radius: 50%;
-  border: none;
-  box-shadow: 0px 0px 6px #00000029;
-
-  svg {
-    width: 25px;
-    height: 25px;
-  }
-`;
-
 const PlayerCard1Container = () => {
   const dispatch = useDispatch();
-  const { playerOneName, playerOneYear, playerOneSeason } = useSelector(
-    (state: IRootState) => state.players,
-  );
+  const { playerOneName, playerOneYear, playerOneSeason } = useSelector((state: IRootState) => state.players);
   const [playerData, setPlayerData] = useState<IplayerData>();
-  const { data, isLoading, error } = useSWR(
-    `/api/player?name=${playerOneName}`,
-  );
+  const { data, isLoading, error } = useSWR(`/api/player?name=${playerOneName}`);
   useEffect(() => {
     setPlayerData(data ? data[playerOneYear][playerOneSeason] : undefined);
     dispatch(chartActions.playerOneChart(playerData));
@@ -66,12 +48,7 @@ const PlayerCard1Container = () => {
               </g>
             </svg>
           </Button>
-          <PlayerCard
-            name={playerOneName}
-            year={playerOneYear}
-            season={playerOneSeason}
-            data={playerData}
-          ></PlayerCard>
+          <PlayerCard name={playerOneName} year={playerOneYear} season={playerOneSeason} data={playerData}></PlayerCard>
         </>
       )}
     </>
@@ -79,3 +56,17 @@ const PlayerCard1Container = () => {
 };
 
 export default PlayerCard1Container;
+
+const Button = styled.button`
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 12px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0px 0px 6px #00000029;
+
+  svg {
+    width: 25px;
+    height: 25px;
+  }
+`;

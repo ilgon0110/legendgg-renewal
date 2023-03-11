@@ -2,14 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import Modal from 'react-modal';
 import PostModal from '@components/postModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { IPostModalPlayerInitialState, IRootState, postModalActions } from '@store/index';
+import { IRootState, postModalActions } from '@store/index';
 import useMutation from '@libs/client/useMutation';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { S } from '@styles/myteams/post';
+import ResetSvg from 'assets/ResetSvg';
 
 function MyTeamPost() {
   const { postModal } = useSelector((state: IRootState) => state);
-  const [post, { data, loading, error }] = useMutation('/api/post/bestplayer');
+  const [post, { data }] = useMutation<{ ok: boolean; id: string }>('/api/post/bestplayer');
   const router = useRouter();
   useEffect(() => {
     if (data?.ok) {
@@ -38,46 +39,24 @@ function MyTeamPost() {
     if (!playerData.every((player) => player.isSelected === true)) return;
     post({ playerData, playerDescription });
   };
+
   const reSelect = (line: string) => {
     dispatch(postModalActions.playerSelect({ line: line, playerInfo: {}, isSelected: false }));
     dispatch(postModalActions.setIsOpen(true));
   };
-  const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-      width: '70%',
-      height: '550px',
-    },
-  };
+
   Modal.setAppElement('#__next');
   return (
     <S.Container>
       <form onSubmit={handleSubmit}>
         <S.Item>
-          {line.map((line, idx) => {
+          {line.map((line) => {
             return (
               <S.ImageBox key={line}>
                 {postModal[line].isSelected ? (
                   <>
                     <S.Button onClick={() => reSelect(line)}>
-                      <svg
-                        fill="white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        version="1.1"
-                        x="0px"
-                        y="0px"
-                        viewBox="0 0 1000 1000"
-                        enableBackground="new 0 0 1000 1000"
-                      >
-                        <g>
-                          <path d="M864.2,559.6c0,201.3-162.9,364.2-364.2,364.2S135.8,760.9,135.8,559.6c0-201.3,162.9-364.2,364.2-364.2c25.2,0,49,2.6,72.8,7.9l-94,94l46.4,46.4L692,176.9L525.2,10l-46.4,46.4l76.8,76.8c-18.5-1.3-37.1-4-55.6-4c-237.1,0-430.4,193.4-430.4,430.4C69.6,796.6,262.9,990,500,990c237.1,0,430.4-193.4,430.4-430.4H864.2z" />
-                        </g>
-                      </svg>
+                      <ResetSvg />
                     </S.Button>
                     <S.ProfileBox name={postModal[line].name}></S.ProfileBox>
                     <S.ProfileText>{`${postModal[line].year}  ${postModal[line].season}`}</S.ProfileText>
@@ -110,3 +89,16 @@ function MyTeamPost() {
 }
 
 export default MyTeamPost;
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    width: '70%',
+    height: '550px',
+  },
+};

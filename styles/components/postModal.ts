@@ -16,7 +16,6 @@ S.Item = styled.div`
   height: 100%;
   display: grid;
   background: white;
-  border-radius: 12px;
 `;
 
 S.Title = styled.h1`

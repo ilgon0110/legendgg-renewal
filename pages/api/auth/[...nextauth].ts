@@ -1,8 +1,9 @@
 import { NextApiHandler } from 'next';
-import NextAuth from 'next-auth';
+import NextAuth, { Session, User } from 'next-auth';
 import KakaoProvider from 'next-auth/providers/kakao';
 import prisma from '@libs/client/prismadb';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { AdapterUser } from 'next-auth/adapters';
 
 const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);
 export default authHandler;
@@ -16,10 +17,16 @@ const options = {
     }),
   ],
   callbacks: {
-    async session({ session, token, user }) {
-      // Send properties to the client, like an access_token and user id from a provider.
-      session.id = user.id;
+    async session({ session, user }: ISessionTypes) {
+      if (session.user) {
+        session.id = user.id;
+      }
       return session;
     },
   },
 };
+
+interface ISessionTypes {
+  session: Session;
+  user: User | AdapterUser;
+}

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { media } from '@styles/theme';
 import { IStyle } from '@styles/stats';
 
 export const S: IStyle = {};

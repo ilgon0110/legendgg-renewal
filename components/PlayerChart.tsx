@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import { IRootState } from '@store/index';
+import { toFixedChartData } from '@utilities/index';
 
 const ApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
@@ -12,12 +13,7 @@ function PlayerChart() {
     players: { playerOneYear, playerOneSeason, playerTwoYear, playerTwoSeason },
   } = useSelector((state: IRootState) => state);
 
-  const toFixedOne = (arr: any) => {
-    return arr.map((v: any) => {
-      return { ...v, y: v.y ? v.y.toFixed(1) : 0 };
-    });
-  };
-  const playerOneChartData2013 = toFixedOne([
+  const playerOneChartData2013 = toFixedChartData([
     {
       x: 'KDA',
       y: playerOne?.kda,
@@ -39,7 +35,7 @@ function PlayerChart() {
       y: playerOne?.winRate,
     },
   ]);
-  const playerOneChartData2015 = toFixedOne([
+  const playerOneChartData2015 = toFixedChartData([
     {
       x: 'KDA',
       y: playerOne?.kda,
@@ -61,7 +57,7 @@ function PlayerChart() {
       y: playerOne?.dmg,
     },
   ]);
-  const playerTwoChartData2013 = toFixedOne([
+  const playerTwoChartData2013 = toFixedChartData([
     {
       x: 'KDA',
       y: playerTwo?.kda,
@@ -83,7 +79,7 @@ function PlayerChart() {
       y: playerTwo?.winRate,
     },
   ]);
-  const playerTwoChartData2015 = toFixedOne([
+  const playerTwoChartData2015 = toFixedChartData([
     {
       x: 'KDA',
       y: playerTwo?.kda,
@@ -114,17 +110,11 @@ function PlayerChart() {
       series={[
         {
           name: `${playerOneYear} ${playerOneSeason}`,
-          data:
-            Number(playerOneYear) < 2015
-              ? playerOneChartData2013
-              : playerOneChartData2015,
+          data: Number(playerOneYear) < 2015 ? playerOneChartData2013 : playerOneChartData2015,
         },
         {
           name: `${playerTwoYear} ${playerTwoSeason}`,
-          data:
-            Number(playerTwoYear) < 2015
-              ? playerTwoChartData2013
-              : playerTwoChartData2015,
+          data: Number(playerTwoYear) < 2015 ? playerTwoChartData2013 : playerTwoChartData2015,
         },
       ]}
       options={{
@@ -152,9 +142,7 @@ function PlayerChart() {
         dataLabels: {
           enabled: true,
           formatter: (element: number, { dataPointIndex }) =>
-            Number(playerOneYear) >= 2015 && dataPointIndex === 3
-              ? element * 10
-              : element,
+            Number(playerOneYear) >= 2015 && dataPointIndex === 3 ? element * 10 : element,
         },
         tooltip: {
           enabled: false,

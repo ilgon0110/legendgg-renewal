@@ -11,5 +11,3 @@ export const navBarSlice = createSlice({
     },
   },
 });
-
-export const navBarActions = navBarSlice.actions;

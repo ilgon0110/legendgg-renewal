@@ -3,17 +3,18 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { S } from '@styles/mypage';
-import useSWR, { useSWRConfig } from 'swr';
+import useSWR from 'swr';
+import { BestPlayer } from '@prisma/client';
+import { fetcher } from '@utilities/index';
 
 const MyPage = () => {
   const { data: session, status } = useSession();
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const router = useRouter();
   useEffect(() => {
     if (!session && status !== 'loading') router.push('/');
   }, [session]);
-  const id = session?.id;
-  const { data, isLoading } = useSWR(`/api/mypage?id=${id}`, fetcher);
+  const { data, isLoading } = useSWR<IMyData>(`/api/mypage?id=${session?.id}`, fetcher);
+
   return (
     <S.Container>
       {isLoading ? (
@@ -21,13 +22,13 @@ const MyPage = () => {
       ) : (
         <>
           <S.LogOut onClick={() => signOut()}>로그아웃</S.LogOut>
-          {data?.bestPlayer.map((v) => (
-            <S.Item key={v.id}>
-              <Link href={`/myteams/${v.id}`}>
+          {data?.bestPlayer.map((player) => (
+            <S.Item key={player.id}>
+              <Link href={`/myteams/${player.id}`}>
                 <S.ImageBox></S.ImageBox>
               </Link>
               <S.TextBox>
-                <Link href={`/myteams/${v.id}`} legacyBehavior>
+                <Link href={`/myteams/${player.id}`} legacyBehavior>
                   <S.Title>{`${session?.user?.name}님의 팀`}</S.Title>
                 </Link>
                 <S.EmojiBox>
@@ -44,3 +45,8 @@ const MyPage = () => {
 };
 
 export default MyPage;
+
+interface IMyData {
+  ok: boolean;
+  bestPlayer: BestPlayer[];
+}

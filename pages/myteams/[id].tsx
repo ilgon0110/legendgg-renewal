@@ -4,27 +4,30 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { S } from '@styles/myteams/id';
+import { fetcher } from '@utilities/index';
 
 function MyTeamDetail() {
   const { data: session, status } = useSession();
-  console.log(session);
   const router = useRouter();
   const { id } = router.query;
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, isLoading } = useSWR(`/api/post/bestplayer?id=${id}`, fetcher);
+  const { data, isLoading } = useSWR<IBestPlayerData>(`/api/post/bestplayer?id=${id}`, fetcher);
   const [isEdit, setIsEdit] = useState(false);
-  console.log(data);
   const [playerDescription, setPlayerDescription] = useState('');
-  const [playerData, setPlayerData] = useState<any>();
+  const [playerData, setPlayerData] = useState<any[]>();
+  const PLAYER_ORDER = { top: 0, jungle: 1, mid: 2, bot: 3, support: 4 };
   useEffect(() => {
-    const list = data?.players?.playerList;
+    const list = data?.players?.playerList
+      .map((v) => {
+        return { ...v, order: PLAYER_ORDER[v.line as keyof typeof PLAYER_ORDER] };
+      })
+      .sort((a, b) => a.order - b.order);
     setPlayerData(list ? [...list] : []);
-    setPlayerDescription(data?.players?.description);
+    setPlayerDescription(data?.players?.description ?? '');
     if (session?.id === data?.players?.userId && status === 'authenticated') {
       setIsEdit(true);
     }
   }, [data, status]);
-  console.log(isEdit);
+
   return (
     <S.Container>
       {isLoading ? (
@@ -32,7 +35,7 @@ function MyTeamDetail() {
       ) : (
         <>
           <S.Item>
-            {playerData?.map((player) => {
+            {playerData?.map((player: any) => {
               return (
                 <S.ImageBox key={player.line}>
                   <S.Line line={player.line}></S.Line>
@@ -62,3 +65,17 @@ function MyTeamDetail() {
 }
 
 export default MyTeamDetail;
+
+interface IBestPlayerData {
+  ok: boolean;
+  players: {
+    description: string;
+    playerList: {
+      line: string;
+      name: string;
+      year: string;
+      season: string;
+    }[];
+    userId: string;
+  } | null;
+}

@@ -1,6 +1,5 @@
 import client from '@libs/client/prismadb';
 import withHandler from '@libs/server/withHandler';
-import { parseCookies } from '@utilities/index';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type Data = {
@@ -8,13 +7,8 @@ type Data = {
   [key: string]: any;
 };
 
-const line = ['top', 'jungle', 'mid', 'bot', 'support'];
-
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const [sessionCookie] = parseCookies(req.headers.cookie);
   const { playerData, playerDescription, bestPlayerId }: IResponseBodyType = req.body;
-
-  console.log(playerData, playerDescription, bestPlayerId);
 
   await client.bestPlayer.update({
     where: {
@@ -33,6 +27,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   });
 
   bfPlayer.forEach(async (bfvalue, i) => {
+    const line = ['top', 'jungle', 'mid', 'bot', 'support'];
     const playerLineData = playerData.map((player, i) => {
       return { ...player, line: line[i] };
     });

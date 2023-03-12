@@ -19,14 +19,14 @@ const Line = {
 type Line = typeof Line[keyof typeof Line];
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const [csrfToken, __, sessionCookie] = parseCookies(req.headers.cookie);
-  const [_, cookieValue] = sessionCookie;
   const {
     body: { playerData, playerDescription },
     query: { id },
   } = req;
 
   if (req.method === 'POST') {
+    const [csrfToken, __, sessionCookie] = parseCookies(req.headers.cookie);
+    const [_, cookieValue] = sessionCookie;
     const session = await client.session.findUnique({
       where: {
         sessionToken: cookieValue,
@@ -52,8 +52,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       },
     });
 
-    playerData.forEach(async (player: any, idx: any) => {
-      const playerList = await client.playerList.create({
+    await playerData.forEach(async (player: any, idx: any) => {
+      await client.playerList.create({
         data: {
           line: Line[idx as keyof typeof Line],
           name: player.name,

@@ -10,16 +10,22 @@ import ResetSvg from 'assets/ResetSvg';
 
 function MyTeamPost() {
   const { postModal } = useSelector((state: IRootState) => state);
+  const dispatch = useDispatch();
   const [post, { data }] = useMutation<{ ok: boolean; id: string }>('/api/post/bestplayer');
   const router = useRouter();
+  const line = ['top', 'jungle', 'mid', 'bot', 'support'];
+
+  useEffect(() => {
+    line.forEach(() => dispatch(postModalActions.reset('')));
+  }, []);
   useEffect(() => {
     if (data?.ok) {
       router.push(`${data.id}`);
     }
   }, [data]);
+
   const [selectedLine, setSelectLine] = useState('');
   const ref = useRef<HTMLTextAreaElement>(null);
-  const dispatch = useDispatch();
   const onClickLine = (line: string) => {
     openModal();
     setSelectLine(line);
@@ -30,7 +36,7 @@ function MyTeamPost() {
   const closeModal = () => {
     dispatch(postModalActions.setIsOpen(false));
   };
-  const line = ['top', 'jungle', 'mid', 'bot', 'support'];
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
     //bestplayer 예외처리 진행 후 POST REQUEST

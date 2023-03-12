@@ -2,7 +2,7 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import { S } from '@styles/myteams/id';
 import { fetcher } from '@utilities/index';
 
@@ -11,9 +11,11 @@ function MyTeamDetail() {
   const router = useRouter();
   const { id } = router.query;
   const { data, isLoading } = useSWR<IBestPlayerData>(`/api/post/bestplayer?id=${id}`, fetcher);
+  const { mutate } = useSWRConfig();
   const [isEdit, setIsEdit] = useState(false);
   const [playerDescription, setPlayerDescription] = useState('');
   const [playerData, setPlayerData] = useState<any[]>();
+  const [dataLoading, setDataLoading] = useState(true);
   const PLAYER_ORDER = { top: 0, jungle: 1, mid: 2, bot: 3, support: 4 };
   useEffect(() => {
     const list = data?.players?.playerList
@@ -26,11 +28,19 @@ function MyTeamDetail() {
     if (session?.id === data?.players?.userId && status === 'authenticated') {
       setIsEdit(true);
     }
-  }, [data, status]);
+  }, [data, status, isLoading]);
+
+  useEffect(() => {
+    if (playerData?.length === 5) {
+      setDataLoading(false);
+    } else if (data?.ok) {
+      mutate(`/api/post/bestplayer?id=${id}`);
+    }
+  }, [data, playerData]);
 
   return (
     <S.Container>
-      {isLoading ? (
+      {dataLoading ? (
         'loading...'
       ) : (
         <>

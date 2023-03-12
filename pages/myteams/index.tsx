@@ -1,10 +1,12 @@
 import Link from 'next/link';
 import { S } from '@styles/myteams';
 import useSWR from 'swr';
+import { useSession } from 'next-auth/react';
 
 export default function MyTeams() {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, isLoading } = useSWR('/api/myteams', fetcher);
+  const { data: session } = useSession();
 
   return (
     <S.Container>
@@ -12,9 +14,13 @@ export default function MyTeams() {
         'loading...'
       ) : (
         <>
-          <Link href={'/myteams/post'} passHref legacyBehavior>
-            <S.Post />
-          </Link>
+          {session?.user ? (
+            <Link href={'/myteams/post'} passHref legacyBehavior>
+              <S.Post />
+            </Link>
+          ) : (
+            <></>
+          )}
           {data?.allPlayers.map((players: any) => (
             <S.Item key={players.id}>
               <Link href={`/myteams/${players.id}`}>

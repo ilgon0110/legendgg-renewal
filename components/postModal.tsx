@@ -43,6 +43,10 @@ function PostModal({ line }: PropTypes) {
   };
 
   const onSubmit = () => {
+    if (!playerData.winRate) {
+      alert('기록이 없는 시즌입니다');
+      return;
+    }
     dispatch(postModalActions.setIsOpen(false));
     dispatch(postModalActions.playerSelect({ line: line, playerInfo, isSelected: true }));
   };

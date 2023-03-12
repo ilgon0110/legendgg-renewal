@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <SWRConfig value={{ fetcher: fetcherAndParsing }}>
-            <SessionProvider session={pageProps.session}>
+            <SessionProvider session={pageProps.session} basePath={process.env.NEXTAUTH_URL}>
               <Layout>
                 <Component {...pageProps} />
               </Layout>

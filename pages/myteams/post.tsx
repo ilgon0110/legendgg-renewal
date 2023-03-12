@@ -7,14 +7,21 @@ import useMutation from '@libs/client/useMutation';
 import { useRouter } from 'next/router';
 import { S } from '@styles/myteams/post';
 import ResetSvg from 'assets/ResetSvg';
+import { useSession } from 'next-auth/react';
 
 function MyTeamPost() {
+  const { data: session } = useSession();
   const { postModal } = useSelector((state: IRootState) => state);
   const dispatch = useDispatch();
   const [post, { data }] = useMutation<{ ok: boolean; id: string }>('/api/post/bestplayer');
   const router = useRouter();
   const line = ['top', 'jungle', 'mid', 'bot', 'support'];
 
+  useEffect(() => {
+    if (!session?.user) {
+      router.push('/');
+    }
+  }, [session]);
   useEffect(() => {
     line.forEach(() => dispatch(postModalActions.reset('')));
   }, []);

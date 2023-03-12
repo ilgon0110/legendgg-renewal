@@ -6,13 +6,20 @@ import { IRootState, postModalActions } from '@store/index';
 import useMutation from '@libs/client/useMutation';
 import { useRouter } from 'next/router';
 import { S } from '@styles/myteams/edit';
+import { useSession } from 'next-auth/react';
 
 function MyTeamPost() {
+  const { data: session } = useSession();
   const { postModal } = useSelector((state: IRootState) => state);
   const [post, { data }] = useMutation('/api/post/bestplayer/update');
   const router = useRouter();
   const { playerData, playerDescription, id: bestPlayerId } = router.query;
 
+  useEffect(() => {
+    if (!session?.user) {
+      router.push('/');
+    }
+  }, [session]);
   useEffect(() => {
     if (data?.ok) {
       router.push(`/myteams/${bestPlayerId}`);

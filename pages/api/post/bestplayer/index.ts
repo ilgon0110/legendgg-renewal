@@ -51,9 +51,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         },
       },
     });
-    console.log(sessionCookie, session, user, bestPlayer);
+
     playerData.forEach(async (player: any, idx: any) => {
-      await client.playerList.create({
+      const playerList = await client.playerList.create({
         data: {
           line: Line[idx as keyof typeof Line],
           name: player.name,
